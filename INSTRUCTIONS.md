@@ -6,18 +6,20 @@ Answer in plain, concrete language. State exactly what you mean, replace vague w
 
 ## Implementation
 
+- The user owns and maintains this code. A completed change must be understandable to them and reflect design decisions they agreed to.
 - Prefer the simplest correct design for the current requirements. Optimize for a developer understanding, debugging, and modifying the code.
 - Follow the project's existing terminology and patterns. Give functions and variables concrete names describing their purpose or behavior.
 - Prefer straightforward functions and explicit control flow. Add a class, interface, module, dependency, or abstraction when it solves a concrete current problem; explain why a simpler approach is insufficient.
 - Handle known inputs, realistic failures, and necessary security and data-integrity requirements. Avoid speculative extensibility, impossible edge cases, redundant fallbacks, and unrelated cleanup.
 - Preserve important existing behavior. Do not simplify by hiding failures, bypassing validation, or weakening necessary safeguards.
 
-## Planning and scope
+## Scope and optional planning
 
-- Before a substantial feature or structural change, explain the proposed behavior, affected files and functions, data flow, and any new abstractions. Make the design understandable before implementing it, and wait for my review of structural decisions.
-- For substantial work, use the shared `plan-and-implement` skill and maintain one `IMPLEMENTATION_PLAN.md` alongside the code, or update the project's existing equivalent.
-- Record agreed scope, implementation decisions, progress, and deferred improvements. For each deferred improvement, state the concrete future requirement or observed problem that would justify it. A deferred suggestion is not authorization to implement it.
-- Apply this planning process proportionately. A small, well-understood fix does not need a new planning document or architectural discussion.
+- Stay within the requested scope. Explain significant behavior or structural choices and obtain agreement when they are not already covered by the user's instructions. Resolve routine details independently within the agreed scope.
+- Use `plan-and-implement` only when the user explicitly requests it or agrees to your recommendation to use it. You may recommend it, but wait for agreement before starting its workflow or creating its planning document.
+- Creating, editing, or reviewing the skill does not invoke it. An ordinary implementation request or a preference for understandable code does not invoke it either.
+- The combined planning document, function-level implementation outline, and staged review checkpoints belong to that optional workflow. Do not require them or create planning documents by default. Clear, routine work can proceed under these general quality and scope preferences.
+- Honor existing explicit approval for the scope it covers; silence and an agent-authored document update are not approval. Deferred improvements remain suggestions until authorized.
 
 ## Verification and review
 
@@ -29,3 +31,7 @@ Answer in plain, concrete language. State exactly what you mean, replace vague w
 ## Maintaining these instructions
 
 These instructions and the shared skills are maintained in the `agent-config` Git repository. Propose durable preference changes there, rather than editing installed copies or accumulating conflicting instructions. Keep project-specific commands and architecture in the project's own instructions.
+
+Every instruction document must be at most 300 lines, including blank lines, headings, and frontmatter. In this repository, the limit applies to every Markdown file, including skills, references, templates, README.md, and any requested plans. It is a hard requirement, enforced by sync validation and repository tests.
+
+Condense wording and remove duplication before reaching the limit. Preserve accepted requirements and decisions. If necessary content cannot fit, pause and propose how to simplify the document or narrow the scope before proceeding. This limit does not require creating additional documents.

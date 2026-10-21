@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from sync import sync
+from sync import sync, validate_document_lengths
 
 
 class SyncTests(unittest.TestCase):
@@ -102,6 +102,27 @@ class SyncTests(unittest.TestCase):
         instructions.write_text("Third version\n")
         self.run_sync(agents=["antigravity"], apply=True)
         self.assertEqual((self.home / ".gemini/GEMINI.md").read_bytes(), instructions.read_bytes())
+
+
+    def test_repository_documents_follow_line_limit(self):
+        validate_document_lengths(Path(__file__).resolve().parents[1])
+
+    def test_document_limit_accepts_300_lines(self):
+        instructions = self.repo / "INSTRUCTIONS.md"
+        instructions.write_text("Preference\n" * 300)
+        self.run_sync(apply=True)
+        self.assertEqual((self.home / ".codex/AGENTS.md").read_bytes(), instructions.read_bytes())
+
+    def test_oversized_document_blocks_all_installation(self):
+        for relative in ("INSTRUCTIONS.md", "skills/example/assets/IMPLEMENTATION_PLAN.md"):
+            with self.subTest(document=relative):
+                document = self.repo / relative
+                document.parent.mkdir(parents=True, exist_ok=True)
+                document.write_text("Line\n" * 301)
+                with self.assertRaisesRegex(ValueError, r"301 lines; maximum is 300"):
+                    self.run_sync(apply=True, replace_existing=True)
+                self.assertEqual(list(self.home.iterdir()), [])
+                document.write_text("Shortened\n")
 
 
 if __name__ == "__main__":

@@ -7,7 +7,6 @@ One source for Ethan's instructions and shared skills across Codex, Claude Code,
 - `INSTRUCTIONS.md`: permanent communication, implementation, planning, and review preferences.
 - `skills/`: portable workflows in the Agent Skills format.
 - `sync.py`: previews or installs copies in the locations each agent reads.
-- `IMPLEMENTATION_PLAN.md`: setup status and deferred improvements.
 
 Python 3.10 or later and Git are required. The sync script uses only the Python standard library. If your machine uses `python3` instead of `python`, substitute that command below.
 
@@ -73,7 +72,11 @@ These are standard locations for local sessions. A custom Codex home, managed in
 
 ## Project-specific guidance
 
-Keep project build commands, architecture, and conventions in that project's `AGENTS.md`. A neighboring `CLAUDE.md` containing `@AGENTS.md` can import it explicitly for Claude Code. Keep the project's living `IMPLEMENTATION_PLAN.md` with its code and branch, rather than in this global configuration repository.
+Keep project build commands, architecture, and conventions in that project's `AGENTS.md`. A neighboring `CLAUDE.md` containing `@AGENTS.md` can import it explicitly for Claude Code.
+
+The `plan-and-implement` workflow is explicit-only. Request it by name; in Codex, invoke `$plan-and-implement`. The skill's `agents/openai.yaml` disables implicit invocation in Codex, and the shared instructions require explicit agreement before any agent starts the workflow. Creating or editing the skill does not invoke it.
+
+Only when that workflow is requested, keep its specification, design decision register, and implementation outline in one `IMPLEMENTATION_PLAN.md` with the feature's code and branch. The template is bundled under the skill's `assets/` directory. This configuration repository does not require its own planning or status document.
 
 Skill instructions should use portable language and relative paths to bundled resources. Skills that depend on a particular product's tools or an external executable need an explicit dependency or a product-specific version.
 
@@ -84,6 +87,8 @@ python -m unittest discover -s tests -v
 ```
 
 Tests use temporary home directories and do not change your installed agent configuration. Installation preflights conflicts across all selected files; filesystem failures during the write phase can still leave a partial update. Fix the reported filesystem issue and rerun the command.
+
+Every Markdown document in this repository has a hard 300-line limit. Repository tests enforce it, and sync.py rejects oversized documents before changing installed files. GitHub checks run the same tests on pushes and pull requests.
 
 ## Reference documentation
 

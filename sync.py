@@ -17,8 +17,24 @@ AGENTS = {
 }
 
 
+MAX_DOCUMENT_LINES = 300
+
+
 def digest(content):
     return hashlib.sha256(content).hexdigest()
+
+
+def validate_document_lengths(repo):
+    for document in sorted(repo.rglob("*.md")):
+        relative = document.relative_to(repo)
+        if ".git" in relative.parts:
+            continue
+        lines = len(document.read_text(encoding="utf-8").splitlines())
+        if lines > MAX_DOCUMENT_LINES:
+            raise ValueError(
+                f"{relative} has {lines} lines; maximum is {MAX_DOCUMENT_LINES}. "
+                "Shorten the document before continuing."
+            )
 
 
 def git_revision(repo):
@@ -56,6 +72,7 @@ def desired_files(repo, agents):
 
 
 def sync(repo, home, agents, apply=False, replace_existing=False):
+    validate_document_lengths(repo)
     state_path = home / ".agent-config" / "state.json"
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
     desired = desired_files(repo, agents)
