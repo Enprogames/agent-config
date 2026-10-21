@@ -1,0 +1,16 @@
+---
+name: review-code
+description: Review a software change for concrete bugs, unmet requirements, and unnecessary complexity. Use when the user requests a code review.
+---
+
+# Review code
+
+Read the requested diff and the surrounding code needed to understand it. Establish the intended behavior from the task, project instructions, and implementation plan when available.
+
+Prioritize concrete correctness problems, regressions, necessary security and data-integrity issues, and unmet requirements. Explain how each issue occurs and point to the relevant code. Verify an assumption when practical before treating it as a finding.
+
+Also identify complexity that makes the change materially harder to understand: unnecessary indirection, unclear names, speculative abstractions, redundant branches, or unrelated changes. Explain the specific simpler alternative and its tradeoff. Do not impose a different architecture merely because you prefer it.
+
+Keep optional improvements separate from defects. Describe the future requirement or observed problem that would justify an optional improvement. Do not create implementation work from hypothetical edge cases or treat every review suggestion as mandatory.
+
+Report no findings when the evidence supports that result. State any important review limitation. A review request alone does not authorize rewriting the code.
