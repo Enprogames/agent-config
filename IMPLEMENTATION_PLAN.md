@@ -19,17 +19,19 @@ Completion means the local repository is validated, published privately on GitHu
 - [x] Draft shared instructions and skills from the preferences agreed in this conversation.
 - [x] Implement sync.py with selected-agent installation and optional fast-forward updates.
 - [x] Run behavior tests and skill validation.
-- [ ] Initialize and commit the local repository.
-- [ ] Authenticate to GitHub as enprogames, create the private remote, and push.
-- [ ] Verify the GitHub repository and local remote configuration.
+- [x] Initialize and commit the local repository.
+- [x] Authenticate to GitHub as enprogames, create the private remote, and push.
+- [x] Verify the GitHub repository and local remote configuration.
 
 Verification: all nine behavior tests pass using temporary home directories. Both skills pass the official skill validator. The current machine's Codex installation preview lists the instruction file and two skills without writing them.
 
-Git Credential Manager has an existing sign-in for Enprogames. GitHub's API confirms the account and that the repository name is available. No additional sign-in is needed. Credentials remain outside this repository.
+Published at https://github.com/Enprogames/agent-config. GitHub's API confirms that the repository is private. The local main branch tracks origin/main, and the published branch matches the local commit.
+
+The existing Git Credential Manager sign-in for Enprogames provided access. No additional sign-in was needed. Credentials remain outside this repository. Installed agent instructions have not been changed.
 
 ## Deferred improvements
 
-- Install on the current machine after reviewing the preview and authorizing writes to the global agent directories.
+- Install on each machine when ready to replace its existing instructions with the shared source, after reviewing the preview.
 - Add a launch shortcut that updates before starting an agent if manual updates become easy to forget.
 - Add machine-specific dependency setup only when a shared skill actually needs additional software.
 - Package provider-specific plugins only when direct skill copies no longer cover a required capability.

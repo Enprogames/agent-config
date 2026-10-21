@@ -13,7 +13,7 @@ Python 3.10 or later and Git are required. The sync script uses only the Python 
 
 ## First installation
 
-Clone the private GitHub repository once it has been published:
+Clone the private GitHub repository:
 
 ```sh
 git clone https://github.com/enprogames/agent-config.git
