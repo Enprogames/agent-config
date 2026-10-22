@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from sync import sync, validate_document_lengths
+from sync import sync
 
 
 class SyncTests(unittest.TestCase):
@@ -17,10 +17,10 @@ class SyncTests(unittest.TestCase):
         self.home = self.root / "home"
         self.repo.mkdir()
         self.home.mkdir()
-        (self.repo / "INSTRUCTIONS.md").write_text("Shared preferences\n")
+        (self.repo / "INSTRUCTIONS.md").write_bytes(b"Shared preferences\n")
         self.skill = self.repo / "skills" / "example" / "SKILL.md"
         self.skill.parent.mkdir(parents=True)
-        self.skill.write_text("Example skill\n")
+        self.skill.write_bytes(b"Example skill\n")
 
     def run_sync(self, agents=None, **options):
         with contextlib.redirect_stdout(io.StringIO()):
@@ -53,7 +53,7 @@ class SyncTests(unittest.TestCase):
 
     def test_source_update_replaces_unchanged_installed_copy(self):
         self.run_sync(apply=True)
-        (self.repo / "INSTRUCTIONS.md").write_text("Revised preferences\n")
+        (self.repo / "INSTRUCTIONS.md").write_bytes(b"Revised preferences\n")
         self.run_sync(apply=True)
         self.assertEqual((self.home / ".codex" / "AGENTS.md").read_text(), "Revised preferences\n")
 
@@ -97,19 +97,16 @@ class SyncTests(unittest.TestCase):
     def test_antigravity_surfaces_can_update_separately(self):
         self.run_sync(agents=["antigravity", "antigravity-cli"], apply=True)
         instructions = self.repo / "INSTRUCTIONS.md"
-        instructions.write_text("Second version\n")
+        instructions.write_bytes(b"Second version\n")
         self.run_sync(agents=["antigravity-cli"], apply=True)
-        instructions.write_text("Third version\n")
+        instructions.write_bytes(b"Third version\n")
         self.run_sync(agents=["antigravity"], apply=True)
         self.assertEqual((self.home / ".gemini/GEMINI.md").read_bytes(), instructions.read_bytes())
 
 
-    def test_repository_documents_follow_line_limit(self):
-        validate_document_lengths(Path(__file__).resolve().parents[1])
-
     def test_document_limit_accepts_300_lines(self):
         instructions = self.repo / "INSTRUCTIONS.md"
-        instructions.write_text("Preference\n" * 300)
+        instructions.write_bytes(b"Preference\n" * 300)
         self.run_sync(apply=True)
         self.assertEqual((self.home / ".codex/AGENTS.md").read_bytes(), instructions.read_bytes())
 
@@ -118,11 +115,11 @@ class SyncTests(unittest.TestCase):
             with self.subTest(document=relative):
                 document = self.repo / relative
                 document.parent.mkdir(parents=True, exist_ok=True)
-                document.write_text("Line\n" * 301)
+                document.write_bytes(b"Line\n" * 301)
                 with self.assertRaisesRegex(ValueError, r"301 lines; maximum is 300"):
                     self.run_sync(apply=True, replace_existing=True)
                 self.assertEqual(list(self.home.iterdir()), [])
-                document.write_text("Shortened\n")
+                document.write_bytes(b"Shortened\n")
 
 
 if __name__ == "__main__":

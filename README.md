@@ -7,6 +7,7 @@ One source for Ethan's instructions and shared skills across Codex, Claude Code,
 - `INSTRUCTIONS.md`: permanent communication, implementation, planning, and review preferences.
 - `skills/`: portable workflows in the Agent Skills format.
 - `sync.py`: previews or installs copies in the locations each agent reads.
+- `verify.py`: checks source text encoding, line endings, and document lengths without changing files.
 
 Python 3.10 or later and Git are required. The sync script uses only the Python standard library. If your machine uses `python3` instead of `python`, substitute that command below.
 
@@ -83,12 +84,15 @@ Skill instructions should use portable language and relative paths to bundled re
 ## Development
 
 ```sh
+python verify.py
 python -m unittest discover -s tests -v
 ```
 
 Tests use temporary home directories and do not change your installed agent configuration. Installation preflights conflicts across all selected files; filesystem failures during the write phase can still leave a partial update. Fix the reported filesystem issue and rerun the command.
 
-Every Markdown document in this repository has a hard 300-line limit. Repository tests enforce it, and sync.py rejects oversized documents before changing installed files. GitHub checks run the same tests on pushes and pull requests.
+Verification requires UTF-8 without a byte-order mark (BOM), LF line endings, a final newline for nonempty text files, and at most 300 lines per Markdown document. It checks `.md`, `.py`, `.ps1`, `.sh`, `.yaml`, `.yml`, `.json`, `.toml`, `.txt`, `.gitattributes`, `.gitignore`, and `.editorconfig` files. It skips `.git`, `.venv`, and `__pycache__` directories and unsupported file types, including binary assets.
+
+The verifier reports file-specific errors and exits with `1` on failure or `0` on success. Sync uses the same verification before changing installed files. GitHub checks run verification and tests on pushes and pull requests.
 
 ## Reference documentation
 

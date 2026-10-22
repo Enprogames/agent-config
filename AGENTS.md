@@ -6,7 +6,7 @@ Every Markdown document in this repository must contain at most 300 lines, count
 
 The plan-and-implement workflow is explicit-only. Creating, editing, or reviewing a skill does not invoke the skill being edited. Do not create a planning or status document for this repository unless the user requests one or explicitly chooses that workflow.
 
-Run `python -m unittest discover -s tests -v` after any repository change, including documentation edits. The tests check document lengths, and sync.py refuses to install a repository containing an oversized document. GitHub checks run the same tests on pushes and pull requests.
+Run `python verify.py` and `python -m unittest discover -s tests -v` after any repository change, including documentation edits. Verification checks UTF-8 without a BOM, LF endings, a final newline for nonempty text files, and document lengths. Sync uses the same checks before installation. GitHub checks run both commands on pushes and pull requests.
 
 Exercise installation only against a temporary home directory during development. Installing into the real user's configuration is a separate, explicit action.
 
