@@ -39,6 +39,8 @@ Ask about unresolved decisions in plain language, with a concrete example when u
 
 ## 3. Agree on the implementation outline
 
+Present the implementation outline first as a compact, annotated hierarchy of files, classes, and functions, following the shared implementation-outline guidance. Attach additional execution explanations to the relevant parts.
+
 Record the proposed changes to files, classes, and functions, including tests, documentation, and build wiring. For each relevant component or function, explain:
 
 - Its name, responsibility, inputs, and results.

@@ -3,6 +3,7 @@
 ## General preferences
 
 - Communicate plainly and concretely. Be concise; use examples when they clarify.
+- Begin implementation descriptions with a compact, annotated hierarchy of the relevant files, classes, and functions. Show each element's purpose and important behavior beside it. Follow [implementation outline guidance](references/implementation-outlines.md), and expand execution details when the hierarchy alone is insufficient.
 - Write code the user can understand, debug, and maintain.
 - Follow existing terminology and patterns. Prefer straightforward functions and control flow; justify new abstractions with a current need.
 - Implement the smallest cohesive change that fully satisfies the request and fits the existing architecture. Consider implementation clarity and review effort. Include necessary tests and documentation; do not weaken correctness or duplicate feature logic merely to reduce the diff.

@@ -29,11 +29,14 @@ Use Proposed, Approved, or Superseded. Record approval only when the user gives 
 
 ## Implementation outline
 
-Include code, tests, documentation, and build wiring. Explain inputs and results, call relationships, state ownership, object lifetime, and important failure behavior where relevant. Walk through one normal operation and one important failure.
+Begin with an annotated tree following the shared implementation-outline guidance. Include code, tests, documentation, and build wiring. Explain inputs and results, call relationships, state ownership, object lifetime, and important failure behavior where relevant. Link entries to their acceptance criteria or approved decisions. Walk through one normal operation and one important failure.
 
-| Step | File and class/function | Responsibility and behavior | Calls and state ownership | Requirement or decision |
-| --- | --- | --- | --- | --- |
-| 1 | [Existing or new element.] | [Exact planned change.] | [Relevant interactions.] | [Acceptance criterion or D1.] |
+```text
+[file path] [new/modify/remove]
+└─ [class, when applicable]
+   └─ [function] — [purpose and planned change]
+      [Relevant inputs/results, calls, state, effects, or failures.]
+```
 
 Allowed local details: loop syntax and temporary variables within approved responsibilities. New helpers, classes, or changes outside this outline require approval unless explicitly delegated.
 
