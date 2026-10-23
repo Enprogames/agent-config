@@ -1,4 +1,4 @@
-"""Install this repository's shared instructions and skills into local agents."""
+"""Install this repository's shared instructions, references, and skills into local agents."""
 
 import argparse
 import hashlib
@@ -33,7 +33,8 @@ def git_revision(repo):
 
 def target_path(home, relative, agent):
     instruction, skills = AGENTS[agent]
-    if relative != instruction and not relative.startswith(skills + "/"):
+    references = (Path(instruction).parent / "references").as_posix()
+    if relative != instruction and not relative.startswith((skills + "/", references + "/")):
         raise ValueError(f"Unexpected managed path: {relative}")
     target = home / relative
     if not target.resolve().is_relative_to(home.resolve()):
@@ -47,6 +48,11 @@ def desired_files(repo, agents):
     for agent in agents:
         instruction, skills = AGENTS[agent]
         files = {instruction: instructions}
+        references = Path(instruction).parent / "references"
+        for source in sorted((repo / "references").rglob("*")):
+            if source.is_file() and "__pycache__" not in source.parts:
+                relative = source.relative_to(repo / "references")
+                files[(references / relative).as_posix()] = source.read_bytes()
         for manifest in sorted((repo / "skills").glob("*/SKILL.md")):
             folder = manifest.parent
             for source in sorted(folder.rglob("*")):

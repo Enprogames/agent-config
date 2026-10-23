@@ -5,6 +5,7 @@ One source for Ethan's instructions and shared skills across Codex, Claude Code,
 ## Contents
 
 - `INSTRUCTIONS.md`: permanent communication, implementation, planning, and review preferences.
+- `references/`: examples and supporting guidance linked from the shared instructions.
 - `skills/`: portable workflows in the Agent Skills format.
 - `sync.py`: previews or installs copies in the locations each agent reads.
 - `verify.py`: checks source text encoding, line endings, and document lengths without changing files.
@@ -28,7 +29,7 @@ python sync.py --agents codex claude antigravity
 
 Use `antigravity-cli` for the CLI's additional skills location. You can select several agents, or just one. A preview never changes installed configuration.
 
-If the preview reports an existing instruction or skill file, compare it with the shared source and consolidate preferences before proceeding. First installation can explicitly back up and replace those files:
+If the preview reports an existing instruction, reference, or skill file, compare it with the shared source and consolidate preferences before proceeding. First installation can explicitly back up and replace those files:
 
 ```sh
 python sync.py --agents codex --apply --replace-existing
@@ -68,6 +69,8 @@ Exit codes: `0` means success or a matching check, `1` means a check found diffe
 | `claude` | `~/.claude/CLAUDE.md` | `~/.claude/skills/` |
 | `antigravity` | `~/.gemini/GEMINI.md` | `~/.gemini/config/skills/` |
 | `antigravity-cli` | `~/.gemini/GEMINI.md` | `~/.gemini/antigravity-cli/skills/` |
+
+References are installed in a `references/` directory beside each global instruction file: `~/.codex/references/`, `~/.claude/references/`, or `~/.gemini/references/`. This preserves relative links from the instructions. References use the same conflict checks, backups, and removal rules as other managed files.
 
 These are standard locations for local sessions. A custom Codex home, managed installation, cloud session, or container may need its own installation procedure. Runtime permissions, account credentials, model choices, conversation history, and machine-specific configuration stay outside this repository. Identical instructions do not guarantee identical behavior from different models.
 

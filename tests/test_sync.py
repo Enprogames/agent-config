@@ -21,13 +21,16 @@ class SyncTests(unittest.TestCase):
         self.skill = self.repo / "skills" / "example" / "SKILL.md"
         self.skill.parent.mkdir(parents=True)
         self.skill.write_bytes(b"Example skill\n")
+        self.reference = self.repo / "references" / "design" / "examples.md"
+        self.reference.parent.mkdir(parents=True)
+        self.reference.write_bytes(b"Design examples\n")
 
     def run_sync(self, agents=None, **options):
         with contextlib.redirect_stdout(io.StringIO()):
             return sync(self.repo, self.home, agents or ["codex"], **options)
 
     def test_preview_does_not_create_installed_files_or_state(self):
-        self.assertEqual(self.run_sync(), 2)
+        self.assertEqual(self.run_sync(), 3)
         self.assertEqual(list(self.home.iterdir()), [])
 
     def test_collision_prevents_all_writes(self):
@@ -84,6 +87,43 @@ class SyncTests(unittest.TestCase):
         self.assertFalse((self.home / ".codex").exists())
         self.assertEqual(self.run_sync(agents=["claude", "antigravity", "antigravity-cli"]), 0)
 
+    def test_references_install_beside_instructions_and_follow_source_changes(self):
+        agents = ["codex", "claude", "antigravity", "antigravity-cli"]
+        self.run_sync(agents=agents, apply=True)
+        installed = [
+            self.home / folder / "references/design/examples.md"
+            for folder in (".codex", ".claude", ".gemini")
+        ]
+        for path in installed:
+            self.assertEqual(path.read_bytes(), self.reference.read_bytes())
+            path.with_name("personal.md").write_bytes(b"Keep this\n")
+        self.reference.write_bytes(b"Revised design examples\n")
+        self.run_sync(agents=["antigravity-cli"], apply=True)
+        self.run_sync(agents=agents, apply=True)
+        for path in installed:
+            self.assertEqual(path.read_bytes(), self.reference.read_bytes())
+        self.assertEqual(self.run_sync(agents=agents), 0)
+        self.reference.unlink()
+        self.run_sync(agents=agents, apply=True)
+        for path in installed:
+            self.assertFalse(path.exists())
+            self.assertEqual(path.with_name("personal.md").read_bytes(), b"Keep this\n")
+
+    def test_reference_local_edit_blocks_update_and_explicit_replacement_backs_up(self):
+        self.run_sync(apply=True)
+        installed = self.home / ".codex/references/design/examples.md"
+        installed.write_bytes(b"Local examples\n")
+        (self.repo / "INSTRUCTIONS.md").write_bytes(b"Revised preferences\n")
+        with self.assertRaises(ValueError):
+            self.run_sync(apply=True)
+        self.assertEqual(installed.read_bytes(), b"Local examples\n")
+        self.assertEqual((self.home / ".codex/AGENTS.md").read_bytes(), b"Shared preferences\n")
+        self.run_sync(apply=True, replace_existing=True)
+        backups = list((self.home / ".agent-config/backups").glob("*/.codex/references/design/examples.md"))
+        self.assertEqual(len(backups), 1)
+        self.assertEqual(backups[0].read_bytes(), b"Local examples\n")
+        self.assertEqual(installed.read_bytes(), self.reference.read_bytes())
+
     def test_invalid_state_path_cannot_remove_an_unrelated_file(self):
         unrelated = self.home / "important.txt"
         unrelated.write_text("Keep this\n")
@@ -111,7 +151,7 @@ class SyncTests(unittest.TestCase):
         self.assertEqual((self.home / ".codex/AGENTS.md").read_bytes(), instructions.read_bytes())
 
     def test_oversized_document_blocks_all_installation(self):
-        for relative in ("INSTRUCTIONS.md", "skills/example/assets/IMPLEMENTATION_PLAN.md"):
+        for relative in ("INSTRUCTIONS.md", "skills/example/assets/IMPLEMENTATION_PLAN.md", "references/design/examples.md"):
             with self.subTest(document=relative):
                 document = self.repo / relative
                 document.parent.mkdir(parents=True, exist_ok=True)

@@ -5,9 +5,10 @@
 - Communicate plainly and concretely. Be concise; use examples when they clarify.
 - Write code the user can understand, debug, and maintain.
 - Follow existing terminology and patterns. Prefer straightforward functions and control flow; justify new abstractions with a current need.
-- Preserve required behavior and safeguards. Avoid speculative features, redundant fallbacks, and unrelated cleanup.
-- Stay within the requested scope; resolve routine details independently. When a newly discovered issue requires expanding the agreed scope or changing the agreed design, explain the problem, reasonable options, and your recommendation. Get agreement before implementing that change. Continue other agreed work where possible. See [design agreement examples](references/design-agreement-examples.md) for examples of this boundary.
-- Verify relevant behavior and inspect the diff for clarity and scope. Report actual changes, checks, and remaining limitations.
+- Implement the smallest cohesive change that fully satisfies the request and fits the existing architecture. Consider implementation clarity and review effort. Include necessary tests and documentation; do not weaken correctness or duplicate feature logic merely to reduce the diff.
+- Include supporting refactors only for a concrete need in the current change. Before substantial implementation, identify them and explain that need. Small local improvements that clarify the changed behavior are permitted; “improves maintainability” alone does not justify broader restructuring.
+- Flag independent bugs, cleanup, modernization, or hardening with their impact and a suggested follow-up. Do not implement them or create tickets without authorization. Get agreement before substantially expanding scope or changing an agreed design; continue independent, agreed work. Consult [scope and design examples](references/design-agreement-examples.md) when the boundary is unclear.
+- Verify relevant behavior and review the final diff against the agreed scope. Remove agent-introduced incidental churn; preserve existing encoding, line endings, and unrelated user changes. Report actual changes, checks, and remaining limitations.
 
 ## Skills
 

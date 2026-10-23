@@ -1,4 +1,4 @@
-# When to get agreement on a design change
+# Change scope and design agreement
 
 These examples clarify the scope and design rule in INSTRUCTIONS.md.
 They do not activate the optional plan-and-implement workflow.
@@ -6,6 +6,18 @@ If an agreed implementation outline sets stricter limits, follow those limits.
 
 Get agreement on the new decision. Continue work that is already authorized
 and does not depend on that decision.
+
+## Decide what belongs in the change
+
+| Change | Default action |
+| --- | --- |
+| Implements the requested behavior. | Include it. |
+| Enables that behavior or keeps its implementation understandable and architecturally sound. | Include it, explaining the concrete need. |
+| Independently improves existing code. | Flag the problem, its impact, and a suggested follow-up ticket. Do not implement it or create the ticket without authorization. |
+
+Judge supporting work by its connection to the current feature.
+“Improves maintainability” alone does not justify a broad refactor.
+Flag issues that merit follow-up; do not inventory every minor cleanup opportunity.
 
 ## Example 1: Adding background retries while implementing Save
 
@@ -80,3 +92,20 @@ change summary. For example:
 
 If the agent instead proposes replacing validation throughout the
 application, that expands the scope and requires agreement first.
+
+## Example 4: Sharing packet construction without redesigning serial handling
+
+**Agreed task:** Add two commands using the existing serial protocol.
+
+**Supporting change:** Both commands need the same new encoding logic.
+Extracting a small shared helper avoids duplicating that logic and keeps
+the two packet formats consistent. Include the helper and explain its purpose.
+
+**Independent improvement:** The existing receiver has weak recovery from
+oversized or unterminated frames. If this does not prevent the requested
+behavior from working correctly, report its impact and propose a separate
+serial-hardening ticket. Do not implement recovery changes automatically.
+
+If valid new packets cannot be received without changing the receiver,
+explain that dependency and the smallest suitable fix. Get agreement
+before a substantial expansion of scope.
