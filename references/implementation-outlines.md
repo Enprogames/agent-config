@@ -26,6 +26,16 @@ In a formal implementation outline, include all planned changes, including
 tests, documentation, and build wiring. In an explanation of existing code,
 include only the parts relevant to the question.
 
+## Styling
+
+Render the hierarchy as nested Markdown lists outside fenced code blocks.
+Use bold inline-code names for files, classes, and functions. Keep explanations
+in normal text, with bold annotation labels such as Calls, Success, and Failure.
+
+Use consistent status cues: 🟢 **[new]**, 🟡 **[modify]**, 🔴 **[remove]**,
+and ⚪ **[context]**. Always retain the text labels; color is supplementary.
+Use standard Markdown rather than renderer-specific HTML/CSS or ANSI colors.
+
 ## Annotations
 
 Give each entry a short, concrete purpose or description of its change.
@@ -47,19 +57,19 @@ SaveError" over broad phrases such as "handles failures."
 
 Illustrative proposed change:
 
-```text
-src/DocumentEditor.ts [modify]
-└─ DocumentEditor [modify]
-   Owns: draft and saveStatus for this editor's lifetime.
-   └─ save() [new] — submit a snapshot of the current draft
-      Calls: await saveDocument(snapshot).
-      Success: saveStatus = saved.
-      Failure: keep draft; saveStatus = error; display SaveError.
+- **`src/DocumentEditor.ts`** · 🟡 **[modify]**
 
-src/DocumentApi.ts [context]
-└─ saveDocument(snapshot) → saved revision
-   Sends one request; rejects with SaveError; no automatic retries.
-```
+  - **`DocumentEditor`** · 🟡 **[modify]** — owns `draft` and `saveStatus` for this editor's lifetime.
+
+    - **`save()`** · 🟢 **[new]** — submit a snapshot of the current draft.
+
+      - **Calls:** `await saveDocument(snapshot)`.
+      - **Success:** `saveStatus = saved`.
+      - **Failure:** keep draft; `saveStatus = error`; display `SaveError`.
+
+- **`src/DocumentApi.ts`** · ⚪ **[context]**
+
+  - **`saveDocument(snapshot) → saved revision`** — sends one request; rejects with `SaveError`; no automatic retries.
 
 ## Execution details
 
