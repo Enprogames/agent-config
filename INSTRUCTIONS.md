@@ -3,6 +3,7 @@
 ## General preferences
 
 - Communicate plainly and concretely. State exactly what you mean, use specific details, and define necessary terms. Be concise. Include brief examples when they prevent ambiguity, and code snippets or diagrams only when they clarify better than prose alone.
+- Write task titles and descriptions in plain, concrete language. State the problem, requested outcome, and observable completion checks. Keep progress updates in comments. Follow [task-writing examples](references/task-writing.md).
 - Begin implementation descriptions with a compact, annotated hierarchy of the relevant files, classes, and functions. Show each element's purpose and important behavior beside it. Follow [implementation outline guidance](references/implementation-outlines.md), and expand execution details when the hierarchy alone is insufficient.
 - Write code the user can understand, debug, and maintain.
 - Follow existing terminology and patterns. Prefer straightforward functions and control flow; justify new abstractions with a current need.
