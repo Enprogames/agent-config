@@ -31,31 +31,21 @@ Inspect the relevant existing code and project instructions before proposing a d
 
 ## 2. Agree on behavior and design decisions
 
-Discuss the simplest approach that meets the goal. Establish supported environments, important normal and failure behavior, and any compatibility, timing, cancellation, retry, or recovery rules relevant to this feature. Do not invent policies to cover hypothetical circumstances.
+Apply the shared advice-and-decisions agreement while comparing approaches. Establish the required normal and failure behavior, supported environments, and relevant compatibility, timing, retry, recovery, or cancellation rules. Explain meaningful alternatives; do not invent policies for hypothetical circumstances.
 
-For each significant choice, record the decision, its reason and tradeoffs, its status, and the user's approval when given. Use Proposed, Approved, or Superseded. Explain meaningful alternatives when they help the user choose.
+Record each significant choice, its basis and tradeoffs (including important assumptions and accepted downsides), status, and approval reference. Use Proposed, Approved, or Superseded. Add a reconsideration trigger only when there is a concrete one.
 
-Ask about unresolved decisions in plain language, with a concrete example when useful. Obtain agreement before implementing behavior that depends on those choices.
+Record explicit user choices as Approved and proposals as Proposed. Preserve unrelated implementation approvals and review checkpoints. Resolve open choices before implementing behavior that depends on them.
 
 ## 3. Agree on the implementation outline
 
-Present the implementation outline first as a compact, annotated hierarchy of files, classes, and functions, following the shared implementation-outline guidance. Attach additional execution explanations to the relevant parts.
-
-Record the proposed changes to files, classes, and functions, including tests, documentation, and build wiring. For each relevant component or function, explain:
-
-- Its name, responsibility, inputs, and results.
-- Which functions call it and which functions it calls.
-- The state it owns or changes and the relevant object lifetime.
-- Important ordering, side effects, and failure behavior.
-- Which approved requirement or decision justifies the change.
-
-Justify new classes, helpers, modules, interfaces, and dependencies using a current need. Follow existing project terminology and patterns. A file-and-function list alone is not enough: walk through one normal operation and one important failure so the user can follow execution and state changes.
+Before drafting the outline, read the implementation-outline guide referenced by the shared instructions. Link each planned change to its acceptance criteria or approved decisions, and justify new abstractions or dependencies with a current need.
 
 Agree on small implementation steps and review checkpoints. Obtain approval of the outline before coding. Existing explicit approval covers the decisions and steps it actually describes; a broad request to finish a feature does not approve unspecified design choices.
 
 ## 4. Implement the approved step
 
-Change only the files and functions in the approved outline for the current step. Follow the agreed behavior, responsibilities, names, and call relationships. New helper functions and classes need outline entries unless the user explicitly delegated their introduction.
+Read the current approved decisions and outline. Implement the current step within its listed files, functions, behavior, and responsibilities. New helper functions and classes need outline entries unless the user explicitly delegated their introduction.
 
 Routine local details, such as loop syntax and temporary variables, may be resolved within approved responsibilities. They must not introduce new behavior, ownership, dependencies, public interfaces, or structural changes.
 
@@ -63,18 +53,13 @@ At an agreed checkpoint, explain how the diff follows the plan, report verificat
 
 ## When the design or outline needs revision
 
-Pause the affected implementation before changing anything outside the approved outline or altering an approved decision. A failing test or newly discovered circumstance does not automatically authorize expanding the implementation.
+Apply the shared agreement's reconsideration and pause boundaries. Continue unaffected approved work; do not apply the proposed revision until the user chooses it. Diagnose failing tests before assuming the design must change; fix within the approved scope when possible.
 
-Explain the current flow, what was discovered, and why the approved approach is insufficient. Give a short, educational explanation followed by this bullet-pointed summary:
+Explain the discovery with evidence, affected decision and impact (including whether work is blocked), recommended revision and tradeoffs, and exact approval needed. Present each point once, using the clearest format. Add a walkthrough only when needed to explain execution.
 
-- Discovery: the concrete behavior or constraint, with evidence.
-- Impact: the requirement or approved approach that cannot be met as written.
-- Recommended revision and tradeoffs: the smallest suitable change and meaningful alternatives.
-- Approval needed: the exact decisions, files, functions, or steps to revise.
+Record the proposal separately from the current approved specification and outline. Investigation and drafting do not authorize implementation of the revision, and silence is not approval.
 
-Record the proposal in the same document, clearly separated from the current approved specification and outline. Further investigation and drafting are allowed. Editing the document does not approve the proposal, and silence is not approval.
-
-Wait for the user's agreement before implementing the revision. Then update the approved sections and mark replaced decisions Superseded. Revisiting the design is a normal, desired part of implementation.
+After the user selects a revision, update the affected specification and outline, record approval, and mark replaced decisions Superseded.
 
 ## Verify and keep the document current
 

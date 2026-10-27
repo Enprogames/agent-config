@@ -84,6 +84,29 @@ Only when that workflow is requested, keep its specification, design decision re
 
 Skill instructions should use portable language and relative paths to bundled resources. Skills that depend on a particular product's tools or an external executable need an explicit dependency or a product-specific version.
 
+## Check instruction loading and behavior
+
+A successful `python sync.py --agents codex --check` confirms that managed
+Codex files match the source. Use the appropriate `--agents` selection for other
+clients. This does not prove that an agent loaded the files or followed their
+advice.
+After an authorized installation, start a fresh session and use the client's
+context diagnostics, where available, to check which shared and project
+instructions were loaded. A skill name in a selector does not prove that its
+body or supporting references were read.
+
+Use the [manual behavioral checks](references/design-agreement-examples.md#manual-behavioral-checks)
+to assess candid advice and faithful execution. For execution cases, use a
+disposable workspace. Keep the prompts and starting files consistent when
+comparing instruction changes, repeat multi-turn pressure cases, and record
+the agent/model version, date, loaded instructions, and observed outcomes.
+Distinguish a changed factual assessment from compliance with a user choice.
+
+The Python checks below validate file handling and distribution, not these
+conversation outcomes. Do not claim cross-agent reliability from one passing
+conversation. The shared agreement does not activate `plan-and-implement`;
+invoke that workflow explicitly only for scenarios that need it.
+
 ## Development
 
 ```sh

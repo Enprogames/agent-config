@@ -42,9 +42,9 @@ Give each entry a short, concrete purpose or description of its change.
 Add relevant details beside the entry:
 
 - Inputs and results.
-- Important functions it calls.
-- State it owns or changes, including its lifetime when relevant.
-- Important side effects and failure behavior.
+- Which functions call it and which functions it calls.
+- State ownership and changes, including object lifetime when relevant.
+- Important ordering, side effects, and failure behavior.
 
 Explain shared responsibilities once, beside their owner. Use short phrases
 and omit empty or irrelevant fields. Keep meaningful names consistent
@@ -79,9 +79,10 @@ Make waiting, deferred work, callbacks, and consequential state changes
 explicit whenever they affect understanding. A label such as "process"
 or "make room" does not explain those effects.
 
-When the annotations cannot explain the execution clearly, add a short
-numbered walkthrough, sequence diagram, state model, or worked example
-immediately after the relevant tree.
+For formal implementation plans, walk through one normal operation and one
+important failure. For other explanations, add a walkthrough, sequence diagram,
+state model, or worked example only when the annotations do not explain the
+execution clearly. Place these details immediately after the relevant tree.
 
 Start with the hierarchy, then expand the difficult parts. Do not repeat
 the same information in several formats.

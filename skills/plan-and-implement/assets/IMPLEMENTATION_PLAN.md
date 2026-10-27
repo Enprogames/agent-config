@@ -21,15 +21,15 @@ Keep this document at or below 300 lines, including blank lines and headings. Re
 
 ## Design decision register
 
-Use Proposed, Approved, or Superseded. Record approval only when the user gives it.
+Use Proposed, Approved, or Superseded. Include the user's explicit choice in the approval reference.
 
 | ID | Status | Decision | Reason and tradeoffs | Approval reference |
 | --- | --- | --- | --- | --- |
-| D1 | Proposed | [Specific choice.] | [Current need and consequences.] | Pending |
+| D1 | Proposed | [Specific choice.] | [Basis, important assumptions, and accepted tradeoffs; concrete reconsideration trigger if relevant.] | Pending |
 
 ## Implementation outline
 
-Begin with an annotated hierarchy rendered as nested Markdown lists, following the shared implementation-outline guidance for bold names and status cues. Include code, tests, documentation, and build wiring. Explain inputs and results, call relationships, state ownership, object lifetime, and important failure behavior where relevant. Link entries to their acceptance criteria or approved decisions. Walk through one normal operation and one important failure.
+Follow the implementation-outline guide linked from the shared instructions. Link entries to their acceptance criteria or approved decisions.
 
 - **`[file path]`** · **[new/modify/remove]**
 
@@ -37,7 +37,7 @@ Begin with an annotated hierarchy rendered as nested Markdown lists, following t
 
     - **`[function]`** · **[new/modify/remove]** — [purpose and planned change].
 
-      - [Relevant inputs/results, calls, state, effects, or failures; use bold labels.]
+      - [Inputs/results; callers/callees; state ownership and lifetime; ordering; success/failure. Use bold labels.]
 
 Allowed local details: loop syntax and temporary variables within approved responsibilities. New helpers, classes, or changes outside this outline require approval unless explicitly delegated.
 
@@ -47,7 +47,7 @@ Allowed local details: loop syntax and temporary variables within approved respo
 
 ## Proposed revisions
 
-None. When needed, record the discovery, impact, recommended revision and tradeoffs, and exact approval needed here. Preserve the current approved sections until the user agrees; then integrate the revision and update decision statuses.
+None. For a revision, record the affected decision, discovery, impact and blocking status, recommendation and tradeoffs, and approval needed. Once approved, update the current sections and mark replaced decisions Superseded.
 
 ## Progress and verification
 
