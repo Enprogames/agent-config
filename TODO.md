@@ -1,0 +1,7 @@
+- [ ] Add an implementation/architecture/design skeptic sub-agent. Decide on where its role fits in within the workflow.
+- [ ] Add source-grounded-research skill
+- [ ] Add document-creation skill
+- [ ] Add C++/CLI coding guidelines and build advice
+- [ ] Add C# coding guidelines
+- [ ] Ensure agents don't ever stage/unstage/commit changes, and only edit files as they exist on disk.
+- [ ] Ensure agents maintain file encoding and line endings. Prefer UTF-8 no BOM, LF line endings, and a final newline for nonempty text files. Do not change existing encoding or line endings unless the user explicitly requests it.
