@@ -18,8 +18,11 @@ Arrange entries by containment:
 Place module-level functions directly beneath their file. Include relevant
 state beside the component that owns it.
 
-For proposed changes, label entries [new], [modify], or [remove].
-Label unchanged dependencies included for explanation [context].
+In proposed or mixed outlines, label changed entries [new], [modify], or
+[remove], and unchanged dependencies [context]. When every entry describes
+existing code, label the explanation "Existing implementation explanation
+— [area]" and omit per-item status labels and emojis. Keep the annotated
+hierarchy and behavioral details.
 Use actual names for existing code and clearly identify proposed new names.
 
 In a formal implementation outline, include all planned changes, including
@@ -32,8 +35,8 @@ Render the hierarchy as nested Markdown lists outside fenced code blocks.
 Use bold inline-code names for files, classes, and functions. Keep explanations
 in normal text, with bold annotation labels such as Calls, Success, and Failure.
 
-Use consistent status cues: 🟢 **[new]**, 🟡 **[modify]**, 🔴 **[remove]**,
-and ⚪ **[context]**. Always retain the text labels; color is supplementary.
+For proposed or mixed outlines, use consistent status cues: 🟢 **[new]**, 🟡 **[modify]**, 🔴 **[remove]**,
+and ⚪ **[context]**. When using status cues, retain their text labels; color is supplementary.
 Use standard Markdown rather than renderer-specific HTML/CSS or ANSI colors.
 
 ## Annotations
@@ -53,9 +56,11 @@ throughout the explanation.
 Prefer concrete descriptions such as "preserves the draft and displays
 SaveError" over broad phrases such as "handles failures."
 
-## Example
+## Examples
 
-Illustrative proposed change:
+### Proposed change
+
+Illustrative example:
 
 - **`src/DocumentEditor.ts`** · 🟡 **[modify]**
 
@@ -70,6 +75,23 @@ Illustrative proposed change:
 - **`src/DocumentApi.ts`** · ⚪ **[context]**
 
   - **`saveDocument(snapshot) → saved revision`** — sends one request; rejects with `SaveError`; no automatic retries.
+
+### Existing implementation explanation — document saving
+
+Illustrative example.
+
+- **`src/DocumentEditor.ts`** — editor state and save action.
+
+  - **`DocumentEditor`** — owns `draft` and `saveStatus` for the editor's lifetime.
+
+    - **`save()`** — captures the current draft and awaits `saveDocument(snapshot)`.
+
+      - **Success:** sets `saveStatus = saved`.
+      - **Failure:** preserves the draft, sets `saveStatus = error`, and displays `SaveError`.
+
+- **`src/DocumentApi.ts`** — persistence request.
+
+  - **`saveDocument(snapshot) → saved revision`** — sends one request; rejects with `SaveError`; does not retry automatically.
 
 ## Execution details
 
