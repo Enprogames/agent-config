@@ -1,7 +1,8 @@
 - [ ] Add an implementation/architecture/design skeptic sub-agent. Decide on where its role fits in within the workflow.
 - [ ] Add source-grounded-research skill
 - [ ] Add document-creation skill
-- [ ] Add C++/CLI coding guidelines and build advice
+- [x] Add C++/CLI and .NET build/test advice
+- [ ] Add C++/CLI coding guidelines
 - [ ] Add C# coding guidelines
 - [x] Preserve staged content and existing unstaged edits; stage, unstage, or commit only when explicitly requested.
     - I've had issues where agents stage or commit changes without asking. Or that when a file is already staged, they will edit the changes in the staging area, instead of in the working tree. I often like to stage changes myself, then see the agent's changes in the working tree, so that I can compare them with what is currently staged. This is especially important when the agent is making changes to a file that is already staged, and I want to see the changes in the working tree before I add those to the staging area if I want to commit them too.
