@@ -29,13 +29,13 @@ Use Proposed, Approved, or Superseded. Include the user's explicit choice in the
 
 ## Implementation outline
 
-Follow the implementation-outline guide linked from the shared instructions. Link entries to their acceptance criteria or approved decisions.
+Follow the implementation-outline guide linked from the shared instructions. Use the guide's status cues at each level. Link entries to their acceptance criteria or approved decisions.
 
-- **`[file path]`** · **[new/modify/remove]**
+- **`[file path]`** · [status cue] — [purpose and planned change].
 
-  - **`[class, when applicable]`**
+  - **`[class, when applicable]`** · [status cue] — [purpose and relevant owned state].
 
-    - **`[function]`** · **[new/modify/remove]** — [purpose and planned change].
+    - **`[function]`** · [status cue] — [purpose and planned change].
 
       - [Inputs/results; callers/callees; state ownership and lifetime; ordering; success/failure. Use bold labels.]
 

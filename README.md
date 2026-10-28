@@ -27,12 +27,12 @@ Preview installation for the agents on this machine:
 python sync.py --agents codex claude antigravity
 ```
 
-Use `antigravity-cli` for the CLI's additional skills location. You can select several agents, or just one. A preview never changes installed configuration.
+Select the agents you use and keep the same `--agents` selection for preview and installation. Include `antigravity-cli` for the CLI's additional skills location. A preview never changes installed configuration.
 
 If the preview reports an existing instruction, reference, or skill file, compare it with the shared source and consolidate preferences before proceeding. First installation can explicitly back up and replace those files:
 
 ```sh
-python sync.py --agents codex --apply --replace-existing
+python sync.py --agents codex claude antigravity --apply --replace-existing
 ```
 
 For an installation without conflicts, omit `--replace-existing`. Backups are stored under `~/.agent-config/backups/`. The script records hashes in `~/.agent-config/state.json`, refuses to overwrite later local edits without explicit replacement, and preserves unrelated files. Removed shared files are removed only when they were previously installed by this script; empty directories may remain.

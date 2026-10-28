@@ -78,21 +78,12 @@ exactly 20 characters.
 **Discovery:** The existing check rejects names containing exactly 20
 characters.
 
-**Decision already authorized:** Correcting that boundary implements the
-requested behavior within the existing validation function.
+**Action already authorized:** Correct the existing validation condition and
+verify the boundary cases. No separate approval is needed for that correction
+or a local variable name. Briefly report why the condition changed.
 
-The agent should make the correction and verify the boundary cases.
-It does not need separate agreement to choose a local variable name or
-adjust the condition.
-
-The agent should briefly mention the decision it made independently in its
-change summary. For example:
-
-> I changed the existing length check to accept exactly 20 characters
-> because that matches the requested limit.
-
-If the agent instead proposes replacing validation throughout the
-application, that expands the scope and requires agreement first.
+Replacing validation throughout the application expands the scope and requires
+agreement first.
 
 ## Example 4: Sharing packet construction without redesigning serial handling
 

@@ -19,6 +19,10 @@ area directly, or stage changes to make the diff easier to read.
 editing to confirm staged content is unchanged. Review `git diff` to confirm
 the requested change and preservation of the user's other edits.
 
+**If the user later says "Commit these changes":** That authorizes staging the
+specified changes as needed and committing them. Preserve unrelated staged
+and unstaged changes and leave them out of the commit.
+
 ## Example 2: Preserving an existing file's format
 
 **Before:** A file uses UTF-8 without BOM, CRLF line endings, and no final
