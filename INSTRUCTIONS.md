@@ -6,6 +6,7 @@
 - Write task titles and descriptions in plain, concrete language. State the problem, requested outcome, and observable completion checks. Keep progress updates in comments. Follow [task-writing examples](references/task-writing.md).
 - Begin implementation descriptions with a compact, annotated hierarchy of the relevant files, classes, and functions. Show each element's purpose and important behavior beside it. Follow [implementation outline guidance](references/implementation-outlines.md), and expand execution details when the hierarchy alone is insufficient.
 - Write code the user can understand, debug, and maintain.
+- When editing or reviewing C# or C++/CLI code, read the corresponding [C# coding guide](references/csharp-coding.md) or [C++/CLI coding guide](references/cpp-cli-coding.md) and the repository's coding conventions.
 - When building or testing .NET code with `.vcxproj` or native dependencies, read the [C++/CLI build guide](references/cpp-cli-builds.md) and the repository's build instructions before choosing commands.
 - Follow existing terminology and patterns. Prefer straightforward functions and control flow; justify new abstractions with a current need.
 - Implement the smallest cohesive change that fully satisfies the request and fits the existing architecture. Consider implementation clarity and review effort. Include necessary tests and documentation; do not weaken correctness or duplicate feature logic merely to reduce the diff.
