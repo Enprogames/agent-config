@@ -13,4 +13,4 @@ Also identify complexity that makes the change materially harder to understand: 
 
 Keep optional improvements separate from defects. Describe the future requirement or observed problem that would justify an optional improvement. Do not create implementation work from hypothetical edge cases or treat every review suggestion as mandatory.
 
-Report no findings when the evidence supports that result. State any important review limitation. A review request alone does not authorize rewriting the code.
+Report no findings when the evidence supports that result. State any important review limitation. When reviewing a change you wrote in the same session, state that as a limitation and recommend an independent review for substantial changes. A review request alone does not authorize rewriting the code.
