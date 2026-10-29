@@ -1,4 +1,4 @@
-"""Install this repository's shared instructions, references, and skills into local agents."""
+"""Install this repository's shared instructions, references, skills, and custom agents into local agents."""
 
 import argparse
 import hashlib
@@ -8,14 +8,15 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 
-from verify import verify_repository
+from verify import IGNORED_DIRECTORIES, verify_repository
 
 
+# Global instructions, skills directory, custom-agents directory, and custom-agent header file.
 AGENTS = {
-    "codex": (".codex/AGENTS.md", ".agents/skills"),
-    "claude": (".claude/CLAUDE.md", ".claude/skills"),
-    "antigravity": (".gemini/GEMINI.md", ".gemini/config/skills"),
-    "antigravity-cli": (".gemini/GEMINI.md", ".gemini/antigravity-cli/skills"),
+    "codex": (".codex/AGENTS.md", ".agents/skills", ".codex/agents", "codex.toml"),
+    "claude": (".claude/CLAUDE.md", ".claude/skills", ".claude/agents", "claude.md"),
+    "antigravity": (".gemini/GEMINI.md", ".gemini/config/skills", ".gemini/config/agents", "antigravity.md"),
+    "antigravity-cli": (".gemini/GEMINI.md", ".gemini/antigravity-cli/skills", ".gemini/config/agents", "antigravity.md"),
 }
 
 
@@ -32,9 +33,9 @@ def git_revision(repo):
 
 
 def target_path(home, relative, agent):
-    instruction, skills = AGENTS[agent]
+    instruction, skills, custom_agents, _ = AGENTS[agent]
     references = (Path(instruction).parent / "references").as_posix()
-    if relative != instruction and not relative.startswith((skills + "/", references + "/")):
+    if relative != instruction and not relative.startswith((skills + "/", references + "/", custom_agents + "/")):
         raise ValueError(f"Unexpected managed path: {relative}")
     target = home / relative
     if not target.resolve().is_relative_to(home.resolve()):
@@ -42,23 +43,39 @@ def target_path(home, relative, agent):
     return target
 
 
+def custom_agent(folder, header_name):
+    """Join a custom agent's product header and shared instructions in that product's format."""
+    header = (folder / header_name).read_bytes()
+    instructions = (folder / "instructions.md").read_bytes()
+    if header_name.endswith(".toml"):
+        # A TOML literal string keeps the instructions unescaped but cannot contain its delimiter.
+        if b"'''" in instructions:
+            raise ValueError(f"{folder.name}/instructions.md cannot contain ''' for a Codex agent.")
+        return header + b"\ndeveloper_instructions = '''\n" + instructions + b"'''\n"
+    return header + b"\n" + instructions
+
+
 def desired_files(repo, agents):
     instructions = (repo / "INSTRUCTIONS.md").read_bytes()
     desired = {}
     for agent in agents:
-        instruction, skills = AGENTS[agent]
+        instruction, skills, custom_agents, header_name = AGENTS[agent]
         files = {instruction: instructions}
         references = Path(instruction).parent / "references"
         for source in sorted((repo / "references").rglob("*")):
-            if source.is_file() and "__pycache__" not in source.parts:
+            if source.is_file() and IGNORED_DIRECTORIES.isdisjoint(source.relative_to(repo).parts):
                 relative = source.relative_to(repo / "references")
                 files[(references / relative).as_posix()] = source.read_bytes()
         for manifest in sorted((repo / "skills").glob("*/SKILL.md")):
             folder = manifest.parent
             for source in sorted(folder.rglob("*")):
-                if source.is_file() and "__pycache__" not in source.parts:
+                if source.is_file() and IGNORED_DIRECTORIES.isdisjoint(source.relative_to(repo).parts):
                     relative = source.relative_to(repo / "skills").as_posix()
                     files[f"{skills}/{relative}"] = source.read_bytes()
+        # Each agent folder supports the products whose header file it contains.
+        for header in sorted((repo / "agents").glob(f"*/{header_name}")):
+            folder = header.parent
+            files[f"{custom_agents}/{folder.name}{header.suffix}"] = custom_agent(folder, header_name)
         desired[agent] = files
     return desired
 

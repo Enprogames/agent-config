@@ -7,6 +7,7 @@ One source for Ethan's instructions and shared skills across Codex, Claude Code,
 - `INSTRUCTIONS.md`: permanent communication, implementation, planning, and review preferences.
 - `references/`: examples and supporting guidance linked from the shared instructions.
 - `skills/`: portable workflows in the Agent Skills format.
+- `agents/`: custom subagents. Each folder holds shared `instructions.md` and a header file per product.
 - `sync.py`: previews or installs copies in the locations each agent reads.
 - `verify.py`: checks source text encoding, line endings, and document lengths without changing files.
 
@@ -63,14 +64,16 @@ Exit codes: `0` means success or a matching check, `1` means a check found diffe
 
 `~` means the current user's home directory; the script resolves it on each machine.
 
-| Agent option | Global instructions | Global skills |
-| --- | --- | --- |
-| `codex` | `~/.codex/AGENTS.md` | `~/.agents/skills/` |
-| `claude` | `~/.claude/CLAUDE.md` | `~/.claude/skills/` |
-| `antigravity` | `~/.gemini/GEMINI.md` | `~/.gemini/config/skills/` |
-| `antigravity-cli` | `~/.gemini/GEMINI.md` | `~/.gemini/antigravity-cli/skills/` |
+| Agent option | Global instructions | Global skills | Custom agents |
+| --- | --- | --- | --- |
+| `codex` | `~/.codex/AGENTS.md` | `~/.agents/skills/` | `~/.codex/agents/` |
+| `claude` | `~/.claude/CLAUDE.md` | `~/.claude/skills/` | `~/.claude/agents/` |
+| `antigravity` | `~/.gemini/GEMINI.md` | `~/.gemini/config/skills/` | `~/.gemini/config/agents/` |
+| `antigravity-cli` | `~/.gemini/GEMINI.md` | `~/.gemini/antigravity-cli/skills/` | `~/.gemini/config/agents/` |
 
 References are installed in a `references/` directory beside each global instruction file: `~/.codex/references/`, `~/.claude/references/`, or `~/.gemini/references/`. This preserves relative links from the instructions. References use the same conflict checks, backups, and removal rules as other managed files.
+
+Each custom agent is a folder under `agents/` with a shared `instructions.md` and one header file per product: `codex.toml`, `claude.md`, or `antigravity.md`. Sync installs the agent only for products whose header exists. For Codex it appends the instructions as a `developer_instructions` TOML literal string, so `instructions.md` cannot contain `'''`; for the other products it appends them after the Markdown frontmatter. Codex ignores sandbox settings in agent files, so a Codex agent's read-only behavior depends on its instructions.
 
 These are standard locations for local sessions. A custom Codex home, managed installation, cloud session, or container may need its own installation procedure. Runtime permissions, account credentials, model choices, conversation history, and machine-specific configuration stay outside this repository. Identical instructions do not guarantee identical behavior from different models.
 

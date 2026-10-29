@@ -1,6 +1,7 @@
 import contextlib
 import io
 import json
+import sys
 from pathlib import Path
 import tempfile
 import unittest
@@ -85,6 +86,40 @@ class SyncTests(unittest.TestCase):
                 generated.parent.mkdir()
                 generated.write_text("Generated\n")
         self.assertEqual(self.run_sync(), 3)
+
+    def add_custom_agent(self, instructions=b"Review carefully.\n"):
+        folder = self.repo / "agents" / "critic"
+        folder.mkdir(parents=True)
+        (folder / "instructions.md").write_bytes(instructions)
+        (folder / "codex.toml").write_bytes(b'name = "critic"\ndescription = "Reviews."\n')
+        (folder / "claude.md").write_bytes(b"---\nname: critic\ndescription: Reviews.\n---\n")
+        return folder
+
+    def test_custom_agents_install_in_each_product_format(self):
+        self.add_custom_agent()
+        agents = ["codex", "claude", "antigravity", "antigravity-cli"]
+        self.run_sync(agents=agents, apply=True)
+        codex = (self.home / ".codex/agents/critic.toml").read_bytes().decode()
+        self.assertEqual(
+            codex,
+            'name = "critic"\ndescription = "Reviews."\n\n'
+            "developer_instructions = '''\nReview carefully.\n'''\n",
+        )
+        if sys.version_info >= (3, 11):
+            import tomllib
+            self.assertEqual(tomllib.loads(codex)["developer_instructions"], "Review carefully.\n")
+        self.assertEqual(
+            (self.home / ".claude/agents/critic.md").read_bytes().decode(),
+            "---\nname: critic\ndescription: Reviews.\n---\n\nReview carefully.\n",
+        )
+        # The folder has no antigravity.md header, so Antigravity receives no file.
+        self.assertFalse((self.home / ".gemini/config/agents").exists())
+        self.assertEqual(self.run_sync(agents=agents), 0)
+
+    def test_codex_agent_rejects_literal_string_delimiter(self):
+        self.add_custom_agent(b"Quote ''' here.\n")
+        with self.assertRaises(ValueError):
+            self.run_sync()
 
     def test_selected_agents_receive_identical_bytes(self):
         self.run_sync(agents=["claude", "antigravity", "antigravity-cli"], apply=True)
