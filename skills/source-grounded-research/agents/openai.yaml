@@ -1,0 +1,4 @@
+interface:
+  display_name: "Source-Grounded Research"
+  short_description: "Build traceable evidence from strong sources"
+  default_prompt: "Use $source-grounded-research to investigate this question and produce a traceable evidence base."

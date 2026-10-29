@@ -78,6 +78,14 @@ class SyncTests(unittest.TestCase):
         self.assertFalse((installed_folder / "SKILL.md").exists())
         self.assertEqual(neighbor.read_text(), "Keep this\n")
 
+    def test_environment_and_cache_folders_are_not_installed(self):
+        for folder in (".venv", ".pytest_cache", ".ruff_cache", "__pycache__"):
+            for source in (self.skill.parent, self.reference.parent):
+                generated = source / folder / "generated.txt"
+                generated.parent.mkdir()
+                generated.write_text("Generated\n")
+        self.assertEqual(self.run_sync(), 3)
+
     def test_selected_agents_receive_identical_bytes(self):
         self.run_sync(agents=["claude", "antigravity", "antigravity-cli"], apply=True)
         for path in (".claude/CLAUDE.md", ".gemini/GEMINI.md"):

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Technical Document Authoring"
+  short_description: "Write clear, deep, verified technical docs"
+  default_prompt: "Use $technical-document-authoring to create a clear, source-grounded technical document."

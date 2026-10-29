@@ -1,0 +1,5 @@
+{
+  "printer_policy": "windows-default",
+  "default_print_settings": "1x,fit,paper=letter",
+  "approval_ttl_minutes": 30
+}

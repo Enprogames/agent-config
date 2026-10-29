@@ -116,7 +116,7 @@ python -m unittest discover -s tests -v
 
 Tests use temporary home directories and do not change your installed agent configuration. Installation preflights conflicts across all selected files; filesystem failures during the write phase can still leave a partial update. Fix the reported filesystem issue and rerun the command.
 
-Verification requires UTF-8 without a byte-order mark (BOM), LF line endings, a final newline for nonempty text files, and at most 300 lines per Markdown document. It checks `.md`, `.py`, `.ps1`, `.sh`, `.yaml`, `.yml`, `.json`, `.toml`, `.txt`, `.gitattributes`, `.gitignore`, and `.editorconfig` files. It skips `.git`, `.venv`, and `__pycache__` directories and unsupported file types, including binary assets.
+Verification requires UTF-8 without a byte-order mark (BOM), LF line endings, a final newline for nonempty text files, and at most 300 lines per Markdown document. It checks `.md`, `.py`, `.ps1`, `.sh`, `.yaml`, `.yml`, `.json`, `.toml`, `.txt`, `.gitattributes`, `.gitignore`, and `.editorconfig` files. It skips `.git`, `.venv`, `.pytest_cache`, `.ruff_cache`, and `__pycache__` directories and unsupported file types, including binary assets. Sync skips the same directories when installing references and skills.
 
 The verifier reports file-specific errors and exits with `1` on failure or `0` on success. Sync uses the same verification before changing installed files. GitHub checks run verification and tests on pushes and pull requests.
 

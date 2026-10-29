@@ -1,0 +1,165 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.48;
+  color: #18212f;
+}
+
+@page {
+  margin: 0.68in 0.72in 0.72in;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+
+body {
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+main {
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #111827;
+  line-height: 1.2;
+  margin: 1.15em 0 0.45em;
+  break-after: avoid-page;
+}
+
+h1 {
+  font-size: 20pt;
+  border-bottom: 1px solid #d7dee8;
+  padding-bottom: 0.25em;
+}
+
+h2 {
+  font-size: 15pt;
+}
+
+h3 {
+  font-size: 12.5pt;
+}
+
+p,
+ul,
+ol,
+blockquote,
+table,
+pre,
+.mermaid {
+  margin: 0.55em 0 0.85em;
+}
+
+li > p {
+  margin: 0.2em 0;
+}
+
+a {
+  color: #1456a0;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+blockquote {
+  border-left: 3px solid #9db6d5;
+  color: #46566a;
+  padding: 0.25em 0 0.25em 0.85em;
+}
+
+code,
+pre {
+  font-family: "Cascadia Mono", Consolas, monospace;
+}
+
+code {
+  font-size: 0.9em;
+}
+
+:not(pre) > code {
+  background: #eef2f6;
+  border-radius: 3px;
+  padding: 0.08em 0.28em;
+}
+
+.highlight,
+pre {
+  background: #f5f7fa;
+  border: 1px solid #d9e0e8;
+  border-radius: 5px;
+  padding: 0.7em 0.8em;
+  break-inside: auto;
+  overflow: visible;
+}
+
+.highlight pre {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+pre,
+.highlight pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  tab-size: 4;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5pt;
+}
+
+th,
+td {
+  border: 1px solid #cbd4df;
+  padding: 0.38em 0.5em;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+th {
+  background: #eaf0f7;
+  break-inside: avoid;
+}
+
+tr {
+  break-inside: avoid-page;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0.7em auto;
+}
+
+.mermaid {
+  break-inside: avoid-page;
+  text-align: center;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #cbd4df;
+  margin: 1.2em 0;
+}

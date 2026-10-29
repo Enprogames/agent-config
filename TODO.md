@@ -1,5 +1,5 @@
 - [ ] Add an implementation/architecture/design skeptic sub-agent. Decide on where its role fits in within the workflow.
-- [ ] Add source-grounded-research skill
+- [x] Add source-grounded-research skill
 - [ ] Add document-creation skill
 - [x] Add C++/CLI and .NET build/test advice
 - [x] Add C++/CLI coding guidelines

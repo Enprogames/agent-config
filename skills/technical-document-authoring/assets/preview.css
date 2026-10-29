@@ -1,0 +1,175 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.58;
+  color: #18212f;
+  background: #f4f6f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-width: 0;
+}
+
+body {
+  padding: 42px 24px 80px;
+}
+
+main {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  padding: 52px 64px 72px;
+  background: #fff;
+  border: 1px solid #d8dee7;
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgb(15 23 42 / 8%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #111827;
+  line-height: 1.23;
+  margin: 1.35em 0 0.48em;
+  scroll-margin-top: 1rem;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2.05rem;
+  border-bottom: 1px solid #d7dee8;
+  padding-bottom: 0.3em;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.22rem;
+}
+
+p,
+ul,
+ol,
+blockquote,
+table,
+pre,
+figure {
+  margin: 0.62em 0 1em;
+}
+
+li > p {
+  margin: 0.2em 0;
+}
+
+a {
+  color: #1456a0;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+blockquote {
+  border-left: 4px solid #91accd;
+  color: #46566a;
+  padding: 0.25em 0 0.25em 1em;
+}
+
+code,
+pre {
+  font-family: "Cascadia Mono", Consolas, monospace;
+}
+
+code {
+  font-size: 0.9em;
+}
+
+:not(pre) > code {
+  background: #eef2f6;
+  border-radius: 3px;
+  padding: 0.08em 0.28em;
+}
+
+.highlight,
+pre {
+  max-width: 100%;
+  background: #f5f7fa;
+  border: 1px solid #d9e0e8;
+  border-radius: 5px;
+  padding: 0.8em 0.9em;
+}
+
+.highlight pre {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+pre,
+.highlight pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  tab-size: 4;
+}
+
+table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+}
+
+th,
+td {
+  border: 1px solid #cbd4df;
+  padding: 0.45em 0.6em;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+th {
+  background: #eaf0f7;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0.8em auto;
+}
+
+figure.diagram {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #cbd4df;
+  margin: 1.5em 0;
+}
+
+@media (max-width: 760px) {
+  body {
+    padding: 0;
+  }
+
+  main {
+    padding: 28px 22px 48px;
+    border: 0;
+    border-radius: 0;
+  }
+}

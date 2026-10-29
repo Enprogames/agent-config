@@ -1,0 +1,4 @@
+interface:
+  display_name: "Response to PDF"
+  short_description: "Render responses to verified PDFs and print safely"
+  default_prompt: "Use $response-to-pdf to export the preceding final response verbatim as a verified PDF."

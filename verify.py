@@ -8,7 +8,7 @@ import sys
 MAX_DOCUMENT_LINES = 300
 TEXT_EXTENSIONS = {".md", ".py", ".ps1", ".sh", ".yaml", ".yml", ".json", ".toml", ".txt"}
 TEXT_FILENAMES = {".gitattributes", ".gitignore", ".editorconfig"}
-IGNORED_DIRECTORIES = {".git", ".venv", "__pycache__"}
+IGNORED_DIRECTORIES = {".git", ".venv", ".pytest_cache", ".ruff_cache", "__pycache__"}
 
 
 def verify_repository(repo):

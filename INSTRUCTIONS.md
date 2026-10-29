@@ -36,6 +36,9 @@ Creating, editing, or reviewing a skill does not invoke that skill.
 - `plan-and-implement` — **Explicit-only:** agree on a feature's specification, design decisions, and implementation outline in one document, then implement approved steps with review checkpoints.
 - `review-docs` — Review requested documents for concrete quality problems and check how agents find and load instructions or skills. Review by default; edit when requested.
 - `review-code` — Review a requested software change for concrete bugs, unmet requirements, and unnecessary complexity, separating defects from optional improvements.
+- `source-grounded-research` — Investigate questions with authoritative, claim-appropriate sources and traceable evidence.
+- `technical-document-authoring` — Draft, revise, or review source-grounded technical documentation for beginners and reference use.
+- `response-to-pdf` — Export a preceding response or supplied Markdown verbatim as a verified PDF; print only after fresh explicit approval.
 
 ## Maintenance
 
