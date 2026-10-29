@@ -69,11 +69,12 @@ Read [references/printing.md](references/printing.md) before any print operation
 1. Use `prepare-print --manifest <manifest.json>` to revalidate the PDF, enumerate installed
    printers, and create a time-limited plan. With no `--printer`, resolve the current Windows
    default printer. Use `--printer <exact-name>` only when a different printer is requested.
-   Never silently substitute another printer.
+   Never silently substitute another printer. Printing requires an installed SumatraPDF; if
+   it is missing, ask the user to install it. Do not install it yourself.
 2. Show the plan's confirmation text to the user and wait for fresh explicit approval or
    changed settings. Make the exact resolved printer name, its default/explicit source, driver,
-   and port obvious. The approved plan locks that identity rather than re-resolving the default
-   during execution.
+   and port obvious. The approved plan locks that identity and the SumatraPDF executable
+   rather than re-resolving either during execution.
 3. Only after approval, call `print --plan <plan.json> --approval-code <code>`.
 4. Report "submitted to the Windows spooler" when the print engine succeeds. Do not claim the
    pages physically printed; downstream printer failures may not be observable.

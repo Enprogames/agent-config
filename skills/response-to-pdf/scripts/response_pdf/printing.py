@@ -16,12 +16,13 @@ from pathlib import Path
 from typing import Any
 
 from scripts.response_pdf.errors import PrintError
-from scripts.response_pdf.paths import SETTINGS_PATH, SUMATRA_PATH
+from scripts.response_pdf.paths import SETTINGS_PATH, find_sumatra
 from scripts.response_pdf.verification import load_verified_manifest, sha256_file
 
 SAFE_SETTINGS = re.compile(r"^[A-Za-z0-9=., x-]+$")
 PRINTER_ENUM_LOCAL = 0x00000002
 PRINTER_ENUM_CONNECTIONS = 0x00000004
+PLAN_FORMAT_VERSION = 2
 
 
 class _PrinterInfo2(ctypes.Structure):
@@ -48,6 +49,96 @@ class _PrinterInfo2(ctypes.Structure):
         ("cJobs", wintypes.DWORD),
         ("AveragePPM", wintypes.DWORD),
     ]
+
+
+class _FixedFileInfo(ctypes.Structure):
+    _fields_ = [
+        (name, wintypes.DWORD)
+        for name in (
+            "dwSignature",
+            "dwStrucVersion",
+            "dwFileVersionMS",
+            "dwFileVersionLS",
+            "dwProductVersionMS",
+            "dwProductVersionLS",
+            "dwFileFlagsMask",
+            "dwFileFlags",
+            "dwFileOS",
+            "dwFileType",
+            "dwFileSubtype",
+            "dwFileDateMS",
+            "dwFileDateLS",
+        )
+    ]
+
+
+def _file_version(path: Path) -> str:
+    """Return a Windows executable's file version for display, or "unknown"."""
+    if os.name != "nt":
+        return "unknown"
+    version = ctypes.WinDLL("version.dll")
+    version.GetFileVersionInfoSizeW.argtypes = [wintypes.LPCWSTR, wintypes.LPDWORD]
+    version.GetFileVersionInfoSizeW.restype = wintypes.DWORD
+    version.GetFileVersionInfoW.argtypes = [
+        wintypes.LPCWSTR,
+        wintypes.DWORD,
+        wintypes.DWORD,
+        wintypes.LPVOID,
+    ]
+    version.GetFileVersionInfoW.restype = wintypes.BOOL
+    version.VerQueryValueW.argtypes = [
+        wintypes.LPCVOID,
+        wintypes.LPCWSTR,
+        ctypes.POINTER(wintypes.LPVOID),
+        ctypes.POINTER(wintypes.UINT),
+    ]
+    version.VerQueryValueW.restype = wintypes.BOOL
+    size = version.GetFileVersionInfoSizeW(str(path), None)
+    if not size:
+        return "unknown"
+    buffer = ctypes.create_string_buffer(size)
+    if not version.GetFileVersionInfoW(str(path), 0, size, buffer):
+        return "unknown"
+    info = wintypes.LPVOID()
+    length = wintypes.UINT()
+    root_block = "\\"
+    if not version.VerQueryValueW(
+        buffer, root_block, ctypes.byref(info), ctypes.byref(length)
+    ):
+        return "unknown"
+    fixed = ctypes.cast(info, ctypes.POINTER(_FixedFileInfo)).contents
+    return ".".join(
+        str(part)
+        for part in (
+            fixed.dwFileVersionMS >> 16,
+            fixed.dwFileVersionMS & 0xFFFF,
+            fixed.dwFileVersionLS >> 16,
+            fixed.dwFileVersionLS & 0xFFFF,
+        )
+    )
+
+
+def _print_engine() -> dict[str, str]:
+    """Identify the installed SumatraPDF that an approved plan will run."""
+    path = find_sumatra()
+    return {
+        "path": str(path),
+        "version": _file_version(path),
+        "sha256": sha256_file(path),
+    }
+
+
+def _assert_engine_identity(engine: dict[str, Any]) -> Path:
+    """Require the approved SumatraPDF executable to remain unchanged."""
+    path = Path(str(engine.get("path", "")))
+    if not path.is_file():
+        raise PrintError(f"Approved print engine is missing: {path}")
+    if sha256_file(path) != engine.get("sha256"):
+        raise PrintError(
+            "Print engine changed after the print plan was prepared. "
+            "Prepare a new plan and approve it."
+        )
+    return path
 
 
 def _settings() -> dict[str, Any]:
@@ -198,6 +289,8 @@ def _confirmation_text(
     printer: dict[str, Any],
     printer_source: str,
     print_settings: str,
+    *,
+    engine: dict[str, str],
 ) -> str:
     source_description = (
         "Windows default when this plan was prepared"
@@ -209,6 +302,7 @@ def _confirmation_text(
         f"({source_description}; driver: {printer.get('DriverName')!r}; "
         f"port: {printer.get('PortName')!r}). JOB: 1 copy of {pdf_name} "
         f"({page_count} page(s)); settings: {print_settings!r}. "
+        f"ENGINE: SumatraPDF {engine['version']} at {engine['path']!r}. "
         "Approve this exact job or specify a different printer/settings."
     )
 
@@ -229,12 +323,13 @@ def prepare_print(
     if not SAFE_SETTINGS.fullmatch(print_settings):
         raise PrintError("Print settings contain unsupported characters.")
     printer = _resolve_printer(printer_name)
+    engine = _print_engine()
     approval_code = secrets.token_hex(4).upper()
     created_at = datetime.now(UTC)
     ttl = int(settings.get("approval_ttl_minutes", 30))
     pdf = Path(manifest["pdf_path"])
     plan = {
-        "format_version": 1,
+        "format_version": PLAN_FORMAT_VERSION,
         "created_at": created_at.isoformat(),
         "expires_at": (created_at + timedelta(minutes=ttl)).isoformat(),
         "manifest_path": str(manifest_path.resolve()),
@@ -245,7 +340,7 @@ def prepare_print(
         "printer_source": printer_source,
         "print_settings": print_settings,
         "approval_code": approval_code,
-        "print_engine": str(SUMATRA_PATH),
+        "print_engine": engine,
     }
     canonical = json.dumps(plan, sort_keys=True, separators=(",", ":"))
     plan["plan_sha256"] = hashlib.sha256(canonical.encode()).hexdigest()
@@ -263,6 +358,7 @@ def prepare_print(
         printer,
         printer_source,
         print_settings,
+        engine=engine,
     )
     return plan
 
@@ -276,6 +372,8 @@ def execute_print(
     except (OSError, json.JSONDecodeError) as exc:
         raise PrintError(f"Invalid print plan: {exc}") from exc
     _assert_plan_integrity(plan)
+    if plan.get("format_version") != PLAN_FORMAT_VERSION:
+        raise PrintError("Print plan uses an older format. Prepare a new plan.")
     expected_code = str(plan.get("approval_code", ""))
     if not hmac.compare_digest(expected_code, approval_code):
         raise PrintError("Approval code does not match this print plan.")
@@ -292,8 +390,10 @@ def execute_print(
     printer_name = str(planned_printer.get("Name", ""))
     current_printer = _resolve_printer(printer_name)
     _assert_printer_identity(planned_printer, current_printer)
-    if not SUMATRA_PATH.is_file():
-        raise PrintError(f"Pinned print engine is missing: {SUMATRA_PATH}")
+    engine = plan.get("print_engine", {})
+    if not isinstance(engine, dict):
+        raise PrintError("Print plan does not contain a valid print engine identity.")
+    engine_path = _assert_engine_identity(engine)
     if validate_only:
         return {
             "status": "validated-not-printed",
@@ -301,7 +401,7 @@ def execute_print(
             "printer": printer_name,
         }
     command = [
-        str(SUMATRA_PATH),
+        str(engine_path),
         "-silent",
         "-print-to",
         printer_name,

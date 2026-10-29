@@ -10,7 +10,9 @@ import pytest
 
 from scripts.response_pdf.codex_capture import _last_final_answer
 from scripts.response_pdf.errors import CaptureError, PrintError, VerificationError
+from scripts.response_pdf.paths import find_sumatra
 from scripts.response_pdf.printing import (
+    _assert_engine_identity,
     _assert_plan_integrity,
     _assert_printer_identity,
     _confirmation_text,
@@ -139,12 +141,62 @@ def test_confirmation_makes_resolved_default_printer_obvious() -> None:
         },
         "windows-default",
         "1x,fit,paper=letter",
+        engine={"path": "C:/Tools/SumatraPDF.exe", "version": "3.6.1.0", "sha256": "a"},
     )
     assert "PRINTER: 'Printer A'" in confirmation
+    assert "ENGINE: SumatraPDF 3.6.1.0 at 'C:/Tools/SumatraPDF.exe'" in confirmation
     assert "Windows default when this plan was prepared" in confirmation
     assert "driver: 'Driver A'" in confirmation
     assert "port: 'PORT1'" in confirmation
     assert "1 copy of document.pdf (2 page(s))" in confirmation
+
+
+def _no_sumatra_on_path(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    monkeypatch.delenv("RESPONSE_PDF_SUMATRA", raising=False)
+    monkeypatch.setattr("scripts.response_pdf.paths.shutil.which", lambda name: None)
+    monkeypatch.setenv("PROGRAMFILES", str(tmp_path / "machine"))
+    monkeypatch.setenv("LOCALAPPDATA", str(tmp_path / "user"))
+
+
+def test_sumatra_is_found_in_per_user_install(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    _no_sumatra_on_path(monkeypatch, tmp_path)
+    executable = tmp_path / "user" / "SumatraPDF" / "SumatraPDF.exe"
+    executable.parent.mkdir(parents=True)
+    executable.write_bytes(b"exe")
+    assert find_sumatra() == executable.resolve()
+
+
+def test_configured_sumatra_must_exist(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    _no_sumatra_on_path(monkeypatch, tmp_path)
+    monkeypatch.setenv("RESPONSE_PDF_SUMATRA", str(tmp_path / "missing.exe"))
+    with pytest.raises(FileNotFoundError, match="RESPONSE_PDF_SUMATRA"):
+        find_sumatra()
+
+
+def test_missing_sumatra_names_install_command(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    _no_sumatra_on_path(monkeypatch, tmp_path)
+    with pytest.raises(FileNotFoundError, match="winget install --id SumatraPDF"):
+        find_sumatra()
+
+
+def test_print_engine_change_after_approval_is_rejected(tmp_path: Path) -> None:
+    executable = tmp_path / "SumatraPDF.exe"
+    executable.write_bytes(b"approved")
+    approved = hashlib.sha256(b"approved").hexdigest()
+    engine = {"path": str(executable), "sha256": approved}
+    assert _assert_engine_identity(engine) == executable
+    executable.write_bytes(b"updated")
+    with pytest.raises(PrintError, match="Print engine changed"):
+        _assert_engine_identity(engine)
+    executable.unlink()
+    with pytest.raises(PrintError, match="missing"):
+        _assert_engine_identity(engine)
 
 
 def test_external_link_selection_excludes_relative_targets() -> None:

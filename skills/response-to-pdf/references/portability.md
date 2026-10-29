@@ -17,4 +17,4 @@ Markdown source before rendering.
 
 PDF rendering from an already supplied Markdown file remains deterministic across hosts that
 have Python 3.14, `uv`, a Chromium browser, and Poppler. Physical printing is Windows-only and
-requires access to the local printer subsystem.
+requires access to the local printer subsystem and an installed SumatraPDF.

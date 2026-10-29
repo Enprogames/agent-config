@@ -23,7 +23,19 @@ default: it targets the approved name and fails if the printer is missing or its
 changed. Missing or ambiguous names are fatal, and there is no silent fallback or substitution.
 Use `--printer <exact-name>` when the user requests a different installed printer.
 
-The pinned SumatraPDF engine submits with `-print-to` and explicit settings. Exit code zero
+## Print engine
+
+Printing uses an installed SumatraPDF; the skill does not bundle or download it. The user
+installs it once per machine with `winget install --id SumatraPDF.SumatraPDF --exact`.
+`prepare-print` uses `RESPONSE_PDF_SUMATRA` when set, otherwise the first `SumatraPDF.exe`
+found on `PATH`, in `%PROGRAMFILES%\SumatraPDF`, or in `%LOCALAPPDATA%\SumatraPDF`. If none
+exists, it stops with the install command; PDF creation does not need SumatraPDF.
+
+The plan records the executable's path, file version, and SHA-256 hash, and the confirmation
+shows the path and version. `print` refuses to run if that file is missing or its hash
+changed, for example after a SumatraPDF update; prepare and approve a new plan.
+
+SumatraPDF submits with `-print-to` and explicit settings. Exit code zero
 means the job was accepted by the Windows printing path, not that paper physically emerged.
 Offline, out-of-paper, and later spooler/driver failures may not be observable. Report only
 "submitted to the Windows spooler" unless separate device evidence proves completion.
