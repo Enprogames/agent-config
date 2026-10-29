@@ -25,7 +25,7 @@ from pygments.lexers import TextLexer, get_lexer_by_name
 from pygments.util import ClassNotFound
 
 from scripts.response_pdf.errors import RenderError
-from scripts.response_pdf.paths import ASSETS_DIR, find_edge
+from scripts.response_pdf.paths import ASSETS_DIR, MERMAID_BUNDLE, find_edge
 
 MAX_REMOTE_IMAGE_BYTES = 25 * 1024 * 1024
 
@@ -273,10 +273,11 @@ def render_markdown_to_pdf(
         vendor_dir.mkdir()
         body, diagram_count = _markdown_html(markdown, source.parent, staging_dir)
         if diagram_count:
-            mermaid_source = ASSETS_DIR / "vendor" / "mermaid.min.js"
-            if not mermaid_source.is_file():
-                raise RenderError("Pinned Mermaid asset is missing from the skill.")
-            shutil.copy2(mermaid_source, vendor_dir / "mermaid.min.js")
+            if not MERMAID_BUNDLE.is_file():
+                raise RenderError(
+                    f"Install the mermaid skill beside this skill: {MERMAID_BUNDLE}"
+                )
+            shutil.copy2(MERMAID_BUNDLE, vendor_dir / "mermaid.min.js")
         document = staging_dir / "document.html"
         document.write_text(
             _document_html(body, paper, diagram_count),

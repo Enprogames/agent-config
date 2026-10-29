@@ -43,6 +43,7 @@ Creating, editing, or reviewing a skill does not invoke that skill.
 - `source-grounded-research` — Investigate questions with authoritative, claim-appropriate sources and traceable evidence.
 - `technical-document-authoring` — Draft, revise, or review source-grounded technical documentation for beginners and reference use.
 - `response-to-pdf` — Export a preceding response or supplied Markdown verbatim as a verified PDF; print only after fresh explicit approval.
+- `mermaid` — Render every Mermaid diagram you write or edit, fix failures, and inspect the rendered images before delivering it.
 
 ## Maintenance
 

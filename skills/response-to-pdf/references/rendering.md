@@ -11,9 +11,9 @@ manifest and never asks a model to rewrite it during rendering.
   than clip.
 - Local, data-URI, and HTTPS images. Local and remote images are copied into an isolated
   staging directory. Missing or non-image assets fail the render instead of disappearing.
-- Mermaid fenced blocks. A pinned local Mermaid browser bundle parses them first, then
-  Playwright waits for SVG rendering before Edge creates the PDF. Mermaid errors fail the
-  render.
+- Mermaid fenced blocks. The pinned Mermaid bundle from the `mermaid` skill, installed
+  beside this skill, parses them first, then Playwright waits for SVG rendering before Edge
+  creates the PDF. Mermaid errors fail the render.
 
 Raw HTML is disabled. This prevents response content from executing arbitrary script. PDF
 page wrapping necessarily differs from chat layout, but visible wording, punctuation, code,

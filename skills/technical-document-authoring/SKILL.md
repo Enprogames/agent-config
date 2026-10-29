@@ -26,7 +26,8 @@ depth rather than arbitrary brevity.
    edge cases. Follow [references/authoring-standard.md](references/authoring-standard.md).
 5. Add excerpts, code, tables, Mermaid, visualizations, or images only when they improve
    comprehension, verification, comparison, navigation, or recall. When any are used,
-   read [references/figures-and-code.md](references/figures-and-code.md).
+   read [references/figures-and-code.md](references/figures-and-code.md). Check and
+   inspect each Mermaid diagram with the `mermaid` skill.
 6. Perform the independent quality passes in
    [references/quality-review.md](references/quality-review.md). Repair problems rather
    than merely listing them.

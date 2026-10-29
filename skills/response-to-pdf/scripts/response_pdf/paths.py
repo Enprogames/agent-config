@@ -10,6 +10,8 @@ SKILL_ROOT = Path(__file__).resolve().parents[2]
 ASSETS_DIR = SKILL_ROOT / "assets"
 SETTINGS_PATH = SKILL_ROOT / "settings.json"
 SUMATRA_PATH = SKILL_ROOT / "tools" / "SumatraPDF.exe"
+# The mermaid skill, installed beside this one, owns the pinned Mermaid bundle.
+MERMAID_BUNDLE = SKILL_ROOT.parent / "mermaid" / "assets" / "mermaid.min.js"
 
 
 def find_edge() -> Path:

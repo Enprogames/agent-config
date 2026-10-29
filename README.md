@@ -87,6 +87,8 @@ Only when that workflow is requested, keep its specification, design decision re
 
 Skill instructions should use portable language and relative paths to bundled resources. Skills that depend on a particular product's tools or an external executable need an explicit dependency or a product-specific version.
 
+Sync installs every skill into the same directory, so a skill may use a file from a sibling skill. The `mermaid` skill owns the only Mermaid bundle; `response-to-pdf` and `technical-document-authoring` load it from `../mermaid/assets/` and fail with an error naming the `mermaid` skill if it is missing. Install those skills together.
+
 ## Check instruction loading and behavior
 
 A successful `python sync.py --agents codex --check` confirms that managed

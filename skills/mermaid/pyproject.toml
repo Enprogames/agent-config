@@ -1,0 +1,18 @@
+[project]
+name = "mermaid-skill"
+version = "0.1.0"
+description = "Render Mermaid diagrams in a local browser and report failures"
+requires-python = ">=3.13,<3.15"
+dependencies = [
+  "markdown-it-py>=4.0,<5",
+  "playwright>=1.55,<2",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.4,<9",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

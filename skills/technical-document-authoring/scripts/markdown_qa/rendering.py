@@ -28,6 +28,9 @@ from scripts.markdown_qa.parsing import GithubSlugger, inline_text
 
 SKILL_ROOT = Path(__file__).resolve().parents[2]
 ASSETS_DIR = SKILL_ROOT / "assets"
+
+# The mermaid skill, installed beside this one, owns the pinned Mermaid bundle.
+MERMAID_BUNDLE = SKILL_ROOT.parent / "mermaid" / "assets" / "mermaid.min.js"
 VIEWPORT_WIDTH = 1440
 VIEWPORT_HEIGHT = 1000
 SCREENSHOT_SLICE_HEIGHT = 1200
@@ -333,10 +336,11 @@ def render_markdown_preview(
             allow_remote_assets=allow_remote_assets,
         )
         if diagram_count:
-            mermaid_source = ASSETS_DIR / "vendor" / "mermaid.min.js"
-            if not mermaid_source.is_file():
-                raise MarkdownQaError("Pinned Mermaid asset is missing from the skill.")
-            shutil.copy2(mermaid_source, vendor_dir / "mermaid.min.js")
+            if not MERMAID_BUNDLE.is_file():
+                raise MarkdownQaError(
+                    f"Install the mermaid skill beside this skill: {MERMAID_BUNDLE}"
+                )
+            shutil.copy2(MERMAID_BUNDLE, vendor_dir / "mermaid.min.js")
         document = staging_dir / "document.html"
         document.write_text(
             _document_html(body, diagram_count),
