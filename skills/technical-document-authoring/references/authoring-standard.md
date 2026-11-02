@@ -21,7 +21,9 @@ Make a difficult subject approachable without making it falsely simple:
 
 The opening should help a beginner enter the subject; later sections should withstand an
 expert's scrutiny. Do not create duplicate beginner and expert explanations when one
-layered explanation can serve both.
+layered explanation can serve both. In annotated source reports, arrange source passages
+to provide this progression and add clearly separated explanations where needed. Apply
+the prose guidance below to agent annotations without rewriting the quoted source text.
 
 ## Prose
 

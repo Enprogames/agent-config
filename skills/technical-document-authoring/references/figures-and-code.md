@@ -5,9 +5,17 @@ usually the best one.
 
 ## Source excerpts
 
-Use a short excerpt when exact wording establishes a definition, guarantee, limitation,
-or disagreement better than paraphrase alone. Link it directly, include a useful locator,
-and explain what it proves. Keep within applicable copyright limits and avoid quote piles.
+Choose excerpts for the [report mode](document-patterns.md#research-report-modes):
+annotated source reports use teaching passages; synthesized reports use selected excerpts
+to clarify wording or expose the basis for analysis. Identify sources beside their
+passages and separate quotations from agent explanations.
+
+Verify text, equations, and qualifiers against the inspected source and check surrounding
+context. Mark omissions and editorial insertions; keep separate passages visibly
+separate. Do not silently repair uncertain OCR or present paraphrase as a quotation.
+Respect applicable copyright and tool quotation limits. Disclose limits that prevent the
+requested format and provide permitted excerpts with precise links or locators; do not
+silently replace the requested report with generated prose.
 
 ## Code snippets
 

@@ -10,6 +10,7 @@ Record:
 
 - the research question and intended use;
 - the audience and required depth;
+- the chosen report mode, when applicable, resolved before evidence collection;
 - relevant context boundaries;
 - what is explicitly out of scope.
 
@@ -33,9 +34,21 @@ substitute for evidence and must not be silently raised during later writing.
 
 ## Source excerpts
 
-Save only excerpts likely to establish exact wording, definitions, constraints, or
-disagreements. Include the source, locator, supported claim, and a note explaining the
-connection. Preserve enough surrounding context to avoid changing the meaning.
+For an annotated source report, retain actual passages that teach the requested concepts
+and mechanisms, with enough surrounding context to preserve meaning. For a synthesized
+report, retain selected passages that establish important wording, definitions,
+constraints, disagreements, or the basis for the analysis. Respect applicable quotation
+limits and record any resulting gaps in coverage.
+
+For each retained passage, include:
+
+- the verbatim text, with omissions and editorial insertions marked;
+- source title, author or responsible organization when known, source type, direct link,
+  and a useful locator, plus date or version when relevant;
+- the supported claim or teaching purpose;
+- whether wording and surrounding context were verified, including any extraction doubts;
+- material source limitations, caveats, or conflicts;
+- terms, prerequisites, notation, or missing context that need explanation for the reader.
 
 ## Local and code evidence
 
@@ -53,5 +66,8 @@ clearer as a diagram, table, chart, or sourced image. These are candidates, not 
 ## Handoff rule
 
 A later author may simplify presentation but must preserve the claim's scope, confidence,
-and caveats. If the planned document needs a stronger claim than the evidence supports,
-return to research rather than smoothing over the gap.
+and caveats, along with the chosen report mode. Preserve actual excerpts and provenance
+for annotated source reports; a ledger of agent-written claim summaries is insufficient.
+If the document lacks necessary teaching passages or needs a stronger claim than the
+evidence supports, return to research rather than smoothing over the gap. Disclose
+unresolved access, extraction, or quotation limits instead of implying full coverage.

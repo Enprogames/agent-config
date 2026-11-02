@@ -12,7 +12,10 @@ depth rather than arbitrary brevity.
 ## Authoring Workflow
 
 1. Establish the reader contract: intended audience, assumed knowledge, desired outcome,
-   scope, and relevant constraints.
+   scope, and relevant constraints. For research reports, resolve the mode from the
+   request and applicable user preferences before evidence collection. Read the
+   [report modes](references/document-patterns.md#research-report-modes) for presentation
+   requirements; preserve the same mode when using `source-grounded-research`.
 2. Build the evidence base. Inspect supplied material and relevant repository files
    before describing them. Use the `source-grounded-research` skill when important claims are
    current, disputed, correctness-sensitive, externally sourced, or not adequately
@@ -24,6 +27,8 @@ depth rather than arbitrary brevity.
 4. Draft with progressive fidelity: give the reader a useful first mental model, label
    its simplifications, and then expose the exact mechanics, constraints, evidence, and
    edge cases. Follow [references/authoring-standard.md](references/authoring-standard.md).
+   In annotated source reports, build this progression through source passages and the
+   explanations the reader needs; do not replace it with a mostly agent-written essay.
 5. Add excerpts, code, tables, Mermaid, visualizations, or images only when they improve
    comprehension, verification, comparison, navigation, or recall. When any are used,
    read [references/figures-and-code.md](references/figures-and-code.md). Check and
@@ -39,7 +44,8 @@ depth rather than arbitrary brevity.
 - Prefer real file, symbol, command, API, and type names. Do not invent repository facts.
 - Separate observed, documented, inferred, proposed, tested, and untested statements.
 - Preserve an evidence pack's scope, confidence, and caveats. Return to research if the
-  desired wording would require a stronger claim than the evidence supports.
+  desired wording would require a stronger claim than the evidence supports, or an
+  annotated report lacks the actual teaching passages needed.
 - If documentation and implementation disagree, identify the disagreement and the basis
   used for the current explanation.
 - Do not imply that a command, test, source, link, render, or image was checked when it

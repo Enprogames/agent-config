@@ -2,6 +2,62 @@
 
 Treat these as menus, not templates. Include only sections that help the current reader.
 
+## Research report modes
+
+Resolve the mode before research using the explicit request and applicable user defaults.
+The modes share evidence standards; they differ in who supplies the explanatory narrative.
+Keep audience, depth, and task purpose as parameters rather than creating additional modes.
+These modes do not force quick answers, code walkthroughs, or other documents into reports.
+
+### Annotated source report
+
+Teach the central technical content through verbatim passages. Select complete explanatory
+units, often paragraphs or connected paragraphs where permitted. Avoid isolated quotations
+that merely decorate an agent-written explanation. Keep original introductions,
+transitions, and conclusions brief; do not impose a quotation percentage or word ratio.
+
+For each substantive section:
+
+1. Briefly identify the question or concept.
+2. Name the source and present the relevant passage in a blockquote. Include title,
+   author or responsible organization when known, source type, direct link, and a useful
+   locator; include date or version when relevant. Shorten repeated source labels.
+3. Assess comprehension against the intended reader's knowledge. Immediately explain
+   dense reasoning, unfamiliar terms or notation, ambiguous phrases, hidden prerequisites,
+   or missing context. Use takeaway bullets, background, definitions, or a worked example
+   as needed; do not add every category after every excerpt.
+4. State material source limitations or unresolved disagreements near the affected passage.
+
+Label annotations **Agent explanation** or **Agent interpretation** and make clear which
+passage they address. Keep them outside the quotation. Added factual background needs
+its own evidence; label illustrative examples. Minimize unnecessary narration without
+sacrificing comprehension, even when a difficult passage needs a longer explanation.
+
+Example request: "Write about aspect Y of technical topic X using
+source-grounded-research and technical-document-authoring." With an annotated-report
+default, arrange teaching passages about Y and explain their difficult parts; do not
+deliver an original essay with a few supporting quotations.
+
+### Synthesized report
+
+Use agent-written explanation and analysis when the requested outcome calls for synthesis.
+Name important sources in the prose and cite specific supporting passages or sections
+near factual claims. Use selected excerpts when exact wording matters or helps the reader
+audit important reasoning. Keep source claims, agent interpretations, and recommendations
+visibly distinct; do not imply that a source states the agent's combined conclusion.
+State concrete material source concerns where the evidence is used.
+
+Example request: "Compare approaches A and B and recommend one for workload C." Explain
+the comparison with precise evidence and identify the recommendation as agent judgment
+unless a cited source explicitly makes that recommendation for the relevant conditions.
+
+### Limits and handoff
+
+Follow [excerpt handling](figures-and-code.md#source-excerpts) for verification and quotation
+limits. If the requested excerpt coverage cannot be provided, disclose the restriction
+and give permitted excerpts with precise passage links or locators. Do not silently
+switch modes. Preserve mode, actual passages, attribution, and caveats across handoffs.
+
 ## Conceptual or mathematical explainer
 
 - the question the concept answers;

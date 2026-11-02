@@ -3,8 +3,10 @@
 ## General preferences
 
 - Communicate plainly and concretely. State exactly what you mean, use specific details, and define necessary terms. Be concise. Include brief examples when they prevent ambiguity, and code snippets or diagrams only when they clarify better than prose alone.
+- For technical learning reports, default to an **annotated source report**: teach through verbatim source passages with clearly separated agent explanations. For comparison, diagnosis, or recommendation reports, default to a **synthesized report**: agent analysis with precise citations. Explicit requests override these defaults. Resolve the mode before collecting evidence, normally without asking; keep quick answers and other deliverables proportionate to their purpose. Use the report guidance in `source-grounded-research` and `technical-document-authoring`.
 - Write task titles and descriptions in plain, concrete language. State the problem, requested outcome, and observable completion checks. Keep progress updates in comments. Follow [task-writing examples](references/task-writing.md).
 - Begin implementation descriptions with a compact, annotated hierarchy of the relevant files, classes, and functions. Show each element's purpose and important behavior beside it. Follow [implementation outline guidance](references/implementation-outlines.md), and expand execution details when the hierarchy alone is insufficient.
+- For SSR design or implementation work, if `C:\repos\ssr-personal-docs\README.md` exists, consult its index and read the relevant plans. Distinguish approved decisions from proposals and pending implementation.
 - Write code the user can understand, debug, and maintain.
 - Write comments that explain why non-obvious code exists, such as a constraint, workaround, or invariant. Do not narrate what code does. Do not leave dead code, unused imports, or TODOs you introduced.
 - When editing or reviewing C# or C++/CLI code, read the corresponding [C# coding guide](references/csharp-coding.md) or [C++/CLI coding guide](references/cpp-cli-coding.md) and the repository's coding conventions.
