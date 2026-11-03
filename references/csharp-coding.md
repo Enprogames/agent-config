@@ -15,6 +15,10 @@ if (isReady)
 }
 ```
 
+Expand compact function, accessor, type, and try/catch/finally bodies into
+blocks with braces on separate lines. Apply the same convention to tests
+and stubs.
+
 Expression-bodied members, expression lambdas, and `using var` declarations
 follow repository conventions; this rule does not require converting them.
 

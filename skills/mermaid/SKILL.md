@@ -16,7 +16,11 @@ Mermaid text is not evidence that it renders.
    bundles its own Mermaid version.
 2. Save the diagram to a file. Check diagrams in Markdown where they live. For a diagram in a
    chat response, write it to a temporary `.mmd` file outside the user's project.
-3. Run the checker. Resolve `<skill-directory>` relative to this `SKILL.md`:
+3. Run the checker. Use the directory containing this `SKILL.md` as `<skill-directory>`.
+
+   Use absolute paths for all command-line file and directory arguments, and quote
+   paths containing spaces. `uv --directory` changes the working directory to the
+   skill directory before Python resolves relative paths.
 
    ```text
    uv run --directory <skill-directory> --python 3.13 python -m scripts.mermaid_check <file>... --out-dir <png-directory>

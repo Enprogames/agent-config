@@ -8,6 +8,7 @@
 - Begin implementation descriptions with a compact, annotated hierarchy of the relevant files, classes, and functions. Show each element's purpose and important behavior beside it. Follow [implementation outline guidance](references/implementation-outlines.md), and expand execution details when the hierarchy alone is insufficient.
 - For SSR design or implementation work, if `C:\repos\ssr-personal-docs\README.md` exists, consult its index and read the relevant plans. Distinguish approved decisions from proposals and pending implementation.
 - Write code the user can understand, debug, and maintain.
+- In C#, C++, C++/CLI, and Arduino code, always brace control-flow bodies, including single-statement bodies. Put block braces on separate lines, including function, type, and accessor bodies. Apply this to new or materially changed code, including tests and stubs, and check the final diff. Preserve expression-bodied members and initializer syntax.
 - Write comments that explain why non-obvious code exists, such as a constraint, workaround, or invariant. Do not narrate what code does. Do not leave dead code, unused imports, or TODOs you introduced.
 - When editing or reviewing C# or C++/CLI code, read the corresponding [C# coding guide](references/csharp-coding.md) or [C++/CLI coding guide](references/cpp-cli-coding.md) and the repository's coding conventions.
 - When building or testing .NET code with `.vcxproj` or native dependencies, read the [C++/CLI build guide](references/cpp-cli-builds.md) and the repository's build instructions before choosing commands.
@@ -41,6 +42,8 @@ Creating, editing, or reviewing a skill does not invoke that skill.
 
 - `plan-and-implement` — **Explicit-only:** agree on a feature's specification, design decisions, and implementation outline in one document, then implement approved steps with review checkpoints.
 - `review-docs` — Review requested documents for concrete quality problems and check how agents find and load instructions or skills. Review by default; edit when requested.
+- `commit-staged` — Inspect staged changes, suggest technical one-line commit messages, and commit only when requested.
+- `walk-change` — **Explicit-only:** walk through a change interactively and propose justified scope reductions or simplifications.
 - `review-code` — Review a requested software change for concrete bugs, unmet requirements, and unnecessary complexity, separating defects from optional improvements.
 - `source-grounded-research` — Investigate questions with authoritative, claim-appropriate sources and traceable evidence.
 - `technical-document-authoring` — Draft, revise, or review source-grounded technical documentation for beginners and reference use.

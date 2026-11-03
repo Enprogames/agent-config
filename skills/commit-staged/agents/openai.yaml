@@ -1,0 +1,7 @@
+interface:
+  display_name: "Commit Staged Changes"
+  short_description: "Suggest messages or commit staged changes"
+  default_prompt: "Use $commit-staged to propose three technical one-line commit messages for the staged changes."
+
+policy:
+  allow_implicit_invocation: true

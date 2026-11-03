@@ -27,11 +27,16 @@ physical printing are separate operations.
 
 ## Run the deterministic helper
 
-Resolve paths relative to this `SKILL.md`. Run all custom Python under 3.14 through `uv`:
+Use the directory containing this `SKILL.md` as `<skill-directory>`. Run all custom
+Python under 3.14 through `uv`:
 
 ```text
 uv run --directory <skill-directory> --python 3.14 python -m scripts.response_pdf <command>
 ```
+
+Use absolute paths for all command-line file and directory arguments, and quote
+paths containing spaces. `uv --directory` changes the working directory to the
+skill directory before Python resolves relative paths.
 
 Do not use an unqualified `python` executable.
 

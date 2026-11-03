@@ -64,7 +64,12 @@ request authorizes it.
 
 ## Markdown QA
 
-For a substantial Markdown document, run the deterministic structural validator:
+For a substantial Markdown document, run the deterministic structural validator.
+Use the directory containing this `SKILL.md` as `<skill-directory>`.
+
+Use absolute paths for all command-line file and directory arguments, and quote
+paths containing spaces. `uv --directory` changes the working directory to the
+skill directory before Python resolves relative paths.
 
 ```text
 uv run --directory <skill-directory> --python 3.13 python -m scripts.markdown_qa validate --input <document.md> [--manifest <manifest.json>]
@@ -74,6 +79,11 @@ Add `--render --qa-dir <directory>` when the document contains Mermaid, images, 
 tables, long code, or other layout-sensitive content. Add `--allow-remote-assets` only
 when remote images are required and network access is authorized. Inspect every generated
 PNG; the manifest deliberately records that visual inspection remains required.
+
+Rendering with `--render` requires a local Chromium browser, such as Microsoft Edge
+or Google Chrome. If automatic discovery cannot find it, set `MARKDOWN_QA_BROWSER`
+to its absolute executable path. Validation without `--render` does not require a
+browser.
 
 The helper checks structure, local links and anchors, image assets and alt text, heading
 hierarchy, code fences, Mermaid parsing and SVG production, browser overflow, and broken

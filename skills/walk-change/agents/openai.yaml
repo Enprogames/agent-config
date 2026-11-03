@@ -1,0 +1,7 @@
+interface:
+  display_name: "Walk Through a Change"
+  short_description: "Explain changes and propose useful scope cuts"
+  default_prompt: "Use $walk-change to walk through this change with me and suggest justified simplifications."
+
+policy:
+  allow_implicit_invocation: false

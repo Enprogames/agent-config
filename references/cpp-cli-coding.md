@@ -14,6 +14,10 @@ if (isReady)
 }
 ```
 
+Expand compact function, accessor, type, and try/catch/finally bodies into
+blocks with braces on separate lines. Apply the same convention to tests
+and stubs.
+
 ## Apply the rules to changed code
 
 Apply these rules to new or modified code. Use braces even when nearby legacy
