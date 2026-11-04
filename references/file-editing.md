@@ -42,6 +42,32 @@ the file.
 If a formatting check finds an existing issue, report it. Do not silently
 convert unrelated files to make the check pass.
 
+## Previewing changes before approval
+
+**Request:** "Show me the before/after changes you recommend."
+
+**Starting state:** A file contains staged version A plus unstaged edits B.
+
+**Expected:** Base the candidate on A+B, so the proposed diff contains only
+the additional edits C. A detached worktree starting at HEAD does not contain
+this baseline automatically. Bring the relevant current working files,
+including necessary untracked files, into the disposable candidate. Leave
+the original files and index unchanged.
+
+When verification needs an implemented candidate, prepare it there, run the
+appropriate checks, and refine it before presentation. Show the final
+candidate's complete diff and actual verification results. Do not claim tests
+of an earlier candidate validate the final one.
+
+Once the diff and results are retained in chat, remove only the candidate and
+worktree artifacts created for the proposal. Do not apply and revert edits in
+the user's working tree as a substitute for isolation. If someone else has
+changed the candidate, preserve it and report the cleanup limitation.
+
+**Later approval:** "Apply these changes" authorizes C. If a necessary extra
+change is discovered, explain why and show the revised complete proposal for
+approval before applying the deviation.
+
 ## Using these examples
 
 Exercise these cases in a disposable workspace. Inspect the resulting files
