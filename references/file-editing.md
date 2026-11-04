@@ -46,13 +46,13 @@ convert unrelated files to make the check pass.
 
 **Request:** "Show me the before/after changes you recommend."
 
-**Starting state:** A file contains staged version A plus unstaged edits B.
+**Starting state:** The working files may contain changes that have not been
+staged.
 
-**Expected:** Base the candidate on A+B, so the proposed diff contains only
-the additional edits C. A detached worktree starting at HEAD does not contain
-this baseline automatically. Bring the relevant current working files,
-including necessary untracked files, into the disposable candidate. Leave
-the original files and index unchanged.
+**Expected:** Use the files as they exist on disk as the baseline. If an
+isolated candidate is needed, copy the relevant files, including necessary
+untracked files, into it and make the proposed edits there. Leave the
+original working files and Git staging area unchanged.
 
 When verification needs an implemented candidate, prepare it there, run the
 appropriate checks, and refine it before presentation. Show the final
@@ -64,9 +64,33 @@ worktree artifacts created for the proposal. Do not apply and revert edits in
 the user's working tree as a substitute for isolation. If someone else has
 changed the candidate, preserve it and report the cleanup limitation.
 
-**Later approval:** "Apply these changes" authorizes C. If a necessary extra
-change is discovered, explain why and show the revised complete proposal for
-approval before applying the deviation.
+**Later approval:** "Apply these changes" authorizes the proposed diff. If a
+necessary extra change is discovered, explain why and show the revised
+complete proposal for approval before applying the deviation.
+
+## Applying changes "as planned"
+
+**Request:** "Edit the current working tree files as planned."
+
+**Expected:** Identify the specific patch or plan being approved from the
+conversation and proceed without redundant confirmation. This request can
+itself grant approval; separate approval wording is not required.
+
+If the user is approving a complete diff, apply those exact edits. Calling
+them "planned changes" does not authorize an alternative implementation.
+
+If the user is approving an implementation plan without a complete diff,
+follow its specified behavior, design, scope, and review checkpoints. Resolve
+routine coding details within those boundaries. Proposed or deferred
+alternatives remain unapproved.
+
+If the conversation leaves materially different plans as plausible referents,
+ask which one the user means before making dependent edits.
+
+Edit the current working files, preserving existing user edits and staged
+content. Run the agreed checks. If completing the work requires departing
+from the applicable approval, explain why and obtain approval for the
+revision before applying that deviation.
 
 ## Using these examples
 
