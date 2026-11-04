@@ -16,9 +16,10 @@ physical printing are separate operations.
   rewrite the selected content unless the user explicitly requests editing.
 - Prefer deterministic host transcript capture. In Codex, use `capture-codex`; it reads the
   stored `final_answer` associated with `CODEX_THREAD_ID`. Never scan unrelated tasks.
-- If deterministic transcript access is unavailable, disclose that context-derived copying
-  cannot be guaranteed byte-for-byte. Ask the user to paste/attach the content or let them
-  approve the captured Markdown before claiming exactness.
+- If deterministic transcript access is unavailable, disclose that limitation. Use
+  supplied Markdown, or obtain approval of a context-derived copy before rendering.
+  Keep context-derived capture labeled as such; approval does not establish
+  byte-for-byte identity with the original response.
 - Never print as part of rendering. Create and verify the PDF first, then make a print plan,
   show its exact PDF, page count, printer, and settings, and obtain fresh explicit approval.
   An initial request that includes "print" is not the final approval.
@@ -48,9 +49,9 @@ Do not use an unqualified `python` executable.
    ... capture-codex --output <source.md>
    ```
 
-   For supplied Markdown, use the supplied file directly. For a disclosed context fallback,
-   write only the selected response to `<source.md>` and let the user approve it when exactness
-   matters.
+   For supplied Markdown, use the supplied file directly. For context-derived capture,
+   write only the selected response to `<source.md>` and follow
+   [the fallback rule](#non-negotiable-behavior) before rendering.
 
 2. Render and verify, always requesting raster QA pages:
 
@@ -69,20 +70,12 @@ For rendering behavior and limitations, read [references/rendering.md](reference
 
 ## Print a verified PDF
 
-Read [references/printing.md](references/printing.md) before any print operation.
+Read and follow [references/printing.md](references/printing.md) for printer selection,
+SumatraPDF setup, plan validation, and execution.
 
-1. Use `prepare-print --manifest <manifest.json>` to revalidate the PDF, enumerate installed
-   printers, and create a time-limited plan. With no `--printer`, resolve the current Windows
-   default printer. Use `--printer <exact-name>` only when a different printer is requested.
-   Never silently substitute another printer. Printing requires an installed SumatraPDF; if
-   it is missing, ask the user to install it. Do not install it yourself.
-2. Show the plan's confirmation text to the user and wait for fresh explicit approval or
-   changed settings. Make the exact resolved printer name, its default/explicit source, driver,
-   and port obvious. The approved plan locks that identity and the SumatraPDF executable
-   rather than re-resolving either during execution.
-3. Only after approval, call `print --plan <plan.json> --approval-code <code>`.
-4. Report "submitted to the Windows spooler" when the print engine succeeds. Do not claim the
-   pages physically printed; downstream printer failures may not be observable.
+Prepare the plan, show its confirmation text, obtain fresh approval, and submit one
+job. Report "submitted to the Windows spooler" on success; do not claim physical
+completion.
 
 ## Portability
 

@@ -11,9 +11,8 @@ the local Codex App Server, reads only that thread, selects its most recent stor
 `agentMessage` whose phase is `final_answer`, and writes the returned text bytes directly.
 
 Other hosts do not share a standard current-message API. If a host supplies an equivalent
-trusted transcript tool, use its exact message record. Otherwise the agent must not claim
-byte-for-byte capture: ask the user to paste/attach the content or approve a context-derived
-Markdown source before rendering.
+trusted transcript tool, use its exact message record. Otherwise, follow the
+[capture fallback rule](../SKILL.md#non-negotiable-behavior).
 
 PDF rendering from an already supplied Markdown file remains deterministic across hosts that
 have Python 3.14, `uv`, a Chromium browser, and Poppler. Physical printing is Windows-only and

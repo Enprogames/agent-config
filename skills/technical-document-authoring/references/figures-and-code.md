@@ -10,12 +10,8 @@ annotated source reports use teaching passages; synthesized reports use selected
 to clarify wording or expose the basis for analysis. Identify sources beside their
 passages and separate quotations from agent explanations.
 
-Verify text, equations, and qualifiers against the inspected source and check surrounding
-context. Mark omissions and editorial insertions; keep separate passages visibly
-separate. Do not silently repair uncertain OCR or present paraphrase as a quotation.
-Respect applicable copyright and tool quotation limits. Disclose limits that prevent the
-requested format and provide permitted excerpts with precise links or locators; do not
-silently replace the requested report with generated prose.
+For quotation verification, attribution, and quotation limits, read and follow
+[the source-grounded-research excerpt rules](../../source-grounded-research/references/source-evaluation.md#excerpts-and-citations).
 
 ## Code snippets
 

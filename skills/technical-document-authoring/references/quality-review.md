@@ -1,6 +1,7 @@
 # Quality Review
 
-Review the completed document in separate passes. Repair discovered problems before
+Review the document in separate passes. For review-only requests, report findings
+without editing. When drafting or revising, repair discovered problems before
 delivery. These are gates, not headings to add to the document.
 
 ## Evidence

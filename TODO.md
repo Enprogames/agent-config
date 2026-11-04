@@ -1,6 +1,6 @@
 - [ ] Add an implementation/architecture/design skeptic sub-agent. Decide on where its role fits in within the workflow.
 - [x] Add source-grounded-research skill
-- [ ] Add document-creation skill
+- [ ] Check whether `technical-document-authoring` fulfills the document-creation task. If it does, mark the task complete; otherwise specify the missing capability and completion checks.
 - [x] Add C++/CLI and .NET build/test advice
 - [x] Add C++/CLI coding guidelines
 - [x] Add C# coding guidelines

@@ -9,6 +9,10 @@ Create technical documents that readers can enter quickly, understand accurately
 return to as reference material. Optimize for sentence-level clarity and document-level
 depth rather than arbitrary brevity.
 
+For review-only requests, use [references/quality-review.md](references/quality-review.md)
+to assess the existing document and report findings without editing. For drafting
+or revision requests, follow the authoring workflow below.
+
 ## Authoring Workflow
 
 1. Establish the reader contract: intended audience, assumed knowledge, desired outcome,
@@ -33,9 +37,8 @@ depth rather than arbitrary brevity.
    comprehension, verification, comparison, navigation, or recall. When any are used,
    read [references/figures-and-code.md](references/figures-and-code.md). Check and
    inspect each Mermaid diagram with the `mermaid` skill.
-6. Perform the independent quality passes in
-   [references/quality-review.md](references/quality-review.md). Repair problems rather
-   than merely listing them.
+6. Review the draft using [references/quality-review.md](references/quality-review.md)
+   and repair discovered problems before delivery.
 7. Validate substantial Markdown and visually inspect rich documents as described below.
 
 ## Grounding and Honesty
