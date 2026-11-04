@@ -123,7 +123,10 @@ def sync(repo, home, agents, apply=False, replace_existing=False):
     revision = git_revision(repo)
     print(f"Source revision: {revision}")
     if not apply:
-        print("Preview only; no installed files changed.")
+        if replace_existing:
+            print("Preview only; no changes applied. Add --apply to install with --replace-existing.")
+        else:
+            print("Preview only; no installed files changed.")
         return len(changes)
 
     backup_root = home / ".agent-config" / "backups" / datetime.now(
