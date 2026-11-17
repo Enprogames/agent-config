@@ -9,6 +9,8 @@ Read the requested diff and the surrounding code needed to understand it. Establ
 
 Prioritize concrete correctness problems, regressions, necessary security and data-integrity issues, and unmet requirements. Explain how each issue occurs and point to the relevant code. Verify an assumption when practical before treating it as a finding.
 
+Check added guards, early returns, fallbacks, and wrappers for changed contracts. Verify test expectations against the requirement, not merely the new implementation.
+
 Also identify complexity that makes the change materially harder to understand: unnecessary indirection, unclear names, speculative abstractions, redundant branches, or unrelated changes. Explain the specific simpler alternative and its tradeoff. Do not impose a different architecture merely because you prefer it.
 
 Keep optional improvements separate from defects. Describe the future requirement or observed problem that would justify an optional improvement. Do not create implementation work from hypothetical edge cases or treat every review suggestion as mandatory.

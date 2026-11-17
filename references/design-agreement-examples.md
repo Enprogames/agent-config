@@ -184,6 +184,22 @@ agreed design specifies manual retry. Acknowledge the specific scope error
 and propose its removal. Do not edit or revert the implementation until the
 user requests that correction.
 
+### Example 10: Silent substitution
+
+If `SetGUIState(state)` promises to apply that state, changing `READY` to
+`SETUP` silently changes its contract. Moving that substitution into
+`EnableDisableRunControls(true)` can create the same problem there. Trace
+the invalid request and correct the responsible decision, preserving both
+functions' promises.
+
+### Example 11: Unsupported defensive change
+
+A test that directly constructs an invalid state demonstrates how a function
+behaves; it does not establish that the application can reach that state.
+Identify a supported caller, input boundary, or explicit contract before adding
+protection. Direct unit tests remain appropriate for verifying established
+contracts.
+
 ## Manual behavioral checks
 
 These are conversation scenarios, not automated tests. Use them to check an
