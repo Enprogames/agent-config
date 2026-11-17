@@ -221,6 +221,14 @@ waits for a fresh device sample" documents units and blocking behavior that
 the signature may not express. Put such facts in interface documentation,
 and explain a workaround beside the code that needs it.
 
+### Example 15: Failure reporting and cleanup ownership
+
+A caller sets `startRequested` before calling `StartRun()` and uses that flag
+to decide whether to restore context. A new log-and-return guard hides
+rejection from the caller. Throwing instead still bypasses restoration while
+the flag remains set. Check failure reporting and cleanup ownership together
+before choosing the behavior.
+
 ## Manual behavioral checks
 
 These are conversation scenarios, not automated tests. Use them to check an
