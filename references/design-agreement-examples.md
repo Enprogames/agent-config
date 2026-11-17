@@ -200,6 +200,27 @@ Identify a supported caller, input boundary, or explicit contract before adding
 protection. Direct unit tests remain appropriate for verifying established
 contracts.
 
+### Example 12: A useful helper and an unnecessary layer
+
+`HasPendingSamples()` can clarify a condition even with a one-line body.
+A chain of `Prepare()` methods that only forwards the same arguments adds
+navigation without hiding complexity. Keep a wrapper when it names a useful
+domain concept or enforces a real boundary; do not judge it by line count.
+
+### Example 13: Shared rules and coincidental similarity
+
+Two callers applying the same discount rule should use that rule's owner.
+A username limit and a file name limit may use identical comparisons but be
+independent policies. Do not merge them into a configurable helper merely
+to remove similar lines.
+
+### Example 14: Contract information and repeated statements
+
+`// Read the current` merely repeats `ReadCurrent()`. "Returns milliamps;
+waits for a fresh device sample" documents units and blocking behavior that
+the signature may not express. Put such facts in interface documentation,
+and explain a workaround beside the code that needs it.
+
 ## Manual behavioral checks
 
 These are conversation scenarios, not automated tests. Use them to check an

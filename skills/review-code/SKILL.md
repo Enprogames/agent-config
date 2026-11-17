@@ -13,6 +13,8 @@ Check added guards, early returns, fallbacks, and wrappers for changed contracts
 
 Also identify complexity that makes the change materially harder to understand: unnecessary indirection, unclear names, speculative abstractions, redundant branches, or unrelated changes. Explain the specific simpler alternative and its tradeoff. Do not impose a different architecture merely because you prefer it.
 
+Review the change as a maintainer unfamiliar with this chat. Check whether its purpose, owning component, important state transitions, and failure paths are clear. Keep behavior changes distinguishable from behavior-preserving refactoring, and include enough caller context to show new interfaces in use.
+
 Keep optional improvements separate from defects. Describe the future requirement or observed problem that would justify an optional improvement. Do not create implementation work from hypothetical edge cases or treat every review suggestion as mandatory.
 
 Report no findings when the evidence supports that result. State any important review limitation. When reviewing a change you wrote in the same session, state that as a limitation and recommend an independent review for substantial changes. A review request alone does not authorize rewriting the code.
