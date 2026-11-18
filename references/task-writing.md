@@ -3,10 +3,22 @@
 Write brief, concrete tasks that someone can scan and act on without reading
 this conversation. Use the examples below as guidance, not a mandatory template.
 
+## Pre-implementation task descriptions
+
+Describe the task from the start of the work. If writing it later, use the
+behavior the task was intended to change as the baseline. Follow any format
+the user or repository requires.
+
+- **Title** — Use an action verb and name the behavior or feature.
+- **Summary** — Use present tense to describe what happens, when it happens,
+  and why it needs to change. State the requested work with verbs such as
+  "Add" or "Route."
+- **Design decisions** (when relevant) — State the agreed choices that affect
+  implementation or verification. Mark consequential unresolved choices as open.
+- **Done when** — List observable outcomes and required verification.
+
 ## Writing rules
 
-- Name what fails and when, or what behavior needs to change.
-- State the requested outcome and how someone can tell the task is complete.
 - Use short paragraphs, meaningful labels, and bullets where they help scanning.
 - Keep progress, build results, and investigation history in comments. Keep the
   description focused on the work and its completion checks.
@@ -16,7 +28,7 @@ this conversation. Use the examples below as guidance, not a mandatory template.
 - Do not invent a root cause or claim verification that has not happened.
   Describe an uncertain cause as a hypothesis.
 - Include only sections that help this task. A small task may need just a short
-  problem statement and two or three completion checks.
+  summary and two or three completion checks.
 
 ## Example 1: Code signing after reboot
 
@@ -70,8 +82,10 @@ A passing build alone does not prove signing works after reboot.
 
 **Title:** Keep edits when saving fails
 
-**Problem**
-If saving fails, the editor clears the user's unsaved changes.
+**Summary**
+If saving fails, the editor clears the user's unsaved changes. This forces the
+user to re-enter those edits before trying again. Keep unsaved edits visible
+and let the user retry the save.
 
 **Done when**
 
