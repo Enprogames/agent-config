@@ -28,6 +28,7 @@
 - Do not run formatters or autofix tools that rewrite files, such as `cargo fmt`, `prettier`, `eslint --fix`, or `dotnet format`, unless the user requests it or the repository's instructions require it. Read-only check modes are permitted. When verification would normally include a skipped formatter, say so.
 - Never write secrets, tokens, or credentials into code, logs, commits, or task text. Refer to them by their configuration or secret-store name.
 - Verify relevant behavior using commands found in the repository's instructions, manifests, and CI workflows. Run the narrowest useful check first, then broader checks when the change's reach warrants it. Review the final diff against the agreed scope. Remove agent-introduced incidental churn; preserve unrelated user changes. Report actual changes, checks run, checks skipped with the reason, and remaining limitations.
+- Before presenting substantial code changes you authored as ready, delegate a fresh agent to review them using `review-code` and wait for its findings. Substantial includes new components or shared abstractions and changes to caller-visible contracts, shared rules, responsibility boundaries, ownership/lifetimes, concurrency, failure/recovery behavior, persistent data, or hardware behavior. Follow the skill's handoff and findings procedure. If delegation is unavailable, report the limitation; never describe self-review as independent.
 
 ## Proposed changes and approval
 
