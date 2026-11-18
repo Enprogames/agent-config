@@ -56,6 +56,7 @@ Skills marked explicit-only require the user's request or agreement before start
 Creating, editing, or reviewing a skill does not invoke that skill.
 
 - `plan-and-implement` — **Explicit-only:** agree on a feature's specification, design decisions, and implementation outline in one document, then implement approved steps with review checkpoints.
+- `compare-implementations` — **Explicit-only:** compare two independent implementations in temporary worktrees, or three on request; recommend candidates for approval without applying them.
 - `review-docs` — Review requested documents for concrete quality problems and check how agents find and load instructions or skills. Review by default; edit when requested.
 - `commit-staged` — Inspect staged changes, suggest technical one-line commit messages, and commit only when requested.
 - `walk-change` — **Explicit-only:** walk through a change interactively and propose justified scope reductions or simplifications.
