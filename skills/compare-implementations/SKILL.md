@@ -6,6 +6,7 @@ description: Compare independent implementations of a bounded software change. E
 # Compare implementations
 
 Use for bounded changes with meaningful design uncertainty and affordable validation.
+If complete candidates are not feasible, agree on a narrower scope before starting.
 Default to two candidates; use three only on request. Candidate work is proposal-only.
 Follow shared and project requirements; applying a selected patch needs separate approval.
 Do not invoke other explicit-only workflows unless requested.
@@ -14,8 +15,12 @@ Do not invoke other explicit-only workflows unless requested.
    exclusions, applicable instructions, and common checks. Record the starting
    commit and an exact snapshot of current working files, including relevant
    uncommitted and untracked content. Give every candidate the same brief and baseline.
+   Reconcile conflicting sources with current approved decisions; resolve outstanding
+   contract or policy choices with the user before dependent implementation.
 2. Create an owned detached temporary worktree for each candidate and populate it
    from that baseline. Leave the original working files, branch, and index untouched.
+   Check the shared build/test setup on the baseline before spawning candidates;
+   keep discovery and execution from modifying the user's configuration.
    Spawn fresh agents concurrently without the orchestrator's conversation history.
    Assign each its worktree's absolute path; require explicit working directories
    for commands and absolute paths for edits. If delegation or isolation is
