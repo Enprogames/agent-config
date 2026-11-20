@@ -1,0 +1,7 @@
+interface:
+  display_name: "GitHub Issue Triage"
+  short_description: "Inspect GitHub issues and their attachments"
+  default_prompt: "Use $github-issue-triage to inspect the issue and its attachments."
+
+policy:
+  allow_implicit_invocation: true

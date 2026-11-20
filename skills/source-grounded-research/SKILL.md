@@ -50,6 +50,11 @@ among competing sources, handling current or disputed claims, or using excerpts.
 - When inspecting a codebase, cite real files and symbols and separate current behavior
   from intended, documented, or proposed behavior.
 - Do not claim that a source, command, test, or artifact was inspected when it was not.
+- Before answering, check that the code actually behaves as described, that precise
+  details such as timing, bit masks, addresses, or state transitions are not
+  oversimplified, and that documented behavior, design intent, and implementation
+  convenience are not conflated. When recommending tests, check that they would catch
+  the specific defect rather than only confirm the current implementation.
 
 ## Output
 

@@ -5,6 +5,18 @@ summary or equivalent section, preserving required title conventions, sections,
 and checklists. Without additional description requirements, use the summary
 alone as the PR description.
 
+## Before writing
+
+- Inspect the actual change set, such as `git diff --stat <base>...HEAD` and focused
+  diffs, and check `git status --short` for unstaged or untracked work. If the base
+  branch is unclear, infer it (often `origin/main`) and state the assumption.
+- Check the user's framing against the diff. Point out missing major changes or
+  misleading wording.
+- Create or update a live PR description only with the user's approval of the text.
+  Use a non-interactive command such as `gh pr edit --body-file <file>`. If the CLI is
+  missing, authentication fails, or no PR exists for the branch, return the proposed
+  text and explain the blocker.
+
 ## Titles
 
 Name the main change and affected behavior or component, using a concrete action

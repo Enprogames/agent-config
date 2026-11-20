@@ -1,0 +1,7 @@
+interface:
+  display_name: "GitHub Actions Investigation"
+  short_description: "Diagnose and fix GitHub Actions failures"
+  default_prompt: "Use $github-actions-investigation to diagnose the latest failed workflow run."
+
+policy:
+  allow_implicit_invocation: true
