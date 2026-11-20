@@ -5,8 +5,9 @@ import sys
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
-from sync import sync
+from sync import main, sync
 
 
 class SyncTests(unittest.TestCase):
@@ -43,6 +44,29 @@ class SyncTests(unittest.TestCase):
         self.assertEqual(instruction.read_text(), "Existing user preference\n")
         self.assertFalse((self.home / ".agents").exists())
         self.assertFalse((self.home / ".agent-config").exists())
+
+    def test_cli_conflict_exit_codes(self):
+        instruction = self.home / ".codex" / "AGENTS.md"
+        instruction.parent.mkdir()
+        local_content = b"Existing user preference\n"
+        instruction.write_bytes(local_content)
+
+        for flags, expected_status in ((("--check",), 1), ((), 2), (("--apply",), 2)):
+            with self.subTest(flags=flags):
+                argv = ["sync.py", "--agents", "codex", *flags]
+                errors = io.StringIO()
+                with (
+                    patch("sync.__file__", str(self.repo / "sync.py")),
+                    patch.object(Path, "home", return_value=self.home),
+                    patch.object(sys, "argv", argv),
+                    contextlib.redirect_stderr(errors),
+                ):
+                    self.assertEqual(main(), expected_status)
+                self.assertIn("Existing or locally edited files need review", errors.getvalue())
+                self.assertIn(str(instruction), errors.getvalue())
+
+        self.assertEqual(instruction.read_bytes(), local_content)
+        self.assertEqual(list(self.home.iterdir()), [instruction.parent])
 
     def test_explicit_replacement_backs_up_then_installs_idempotently(self):
         instruction = self.home / ".codex" / "AGENTS.md"

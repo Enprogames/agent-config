@@ -20,6 +20,10 @@ AGENTS = {
 }
 
 
+class _ManagedFileConflict(ValueError):
+    """Proposed changes would overwrite or remove a pre-existing or locally edited file."""
+
+
 def digest(content):
     return hashlib.sha256(content).hexdigest()
 
@@ -112,7 +116,7 @@ def sync(repo, home, agents, apply=False, replace_existing=False):
             changes[relative] = (target, wanted, current, changed_locally)
 
     if conflicts:
-        raise ValueError(
+        raise _ManagedFileConflict(
             "Existing or locally edited files need review:\n  "
             + "\n  ".join(sorted(set(conflicts)))
             + "\nUse --replace-existing only after review; it saves backups."
@@ -121,7 +125,7 @@ def sync(repo, home, agents, apply=False, replace_existing=False):
     for relative, (_, content, _, _) in changes.items():
         print(f"{'REMOVE' if content is None else 'WRITE '} {relative}")
     revision = git_revision(repo)
-    print(f"Source revision: {revision}")
+    print(f"Checkout Git HEAD: {revision}")
     if not apply:
         if replace_existing:
             print("Preview only; no changes applied. Add --apply to install with --replace-existing.")
@@ -160,7 +164,7 @@ def main():
     parser.add_argument("--agents", nargs="+", choices=AGENTS, required=True)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--apply", action="store_true", help="Install the previewed changes")
-    mode.add_argument("--check", action="store_true", help="Exit 1 if installed files differ")
+    mode.add_argument("--check", action="store_true", help="Exit 1 if installed files differ, including conflicts")
     parser.add_argument("--pull", action="store_true", help="First git pull --ff-only; requires a clean checkout")
     parser.add_argument("--replace-existing", action="store_true", help="Back up and replace existing or locally edited managed files")
     args = parser.parse_args()
@@ -177,6 +181,9 @@ def main():
         changes = sync(repo, Path.home(), list(dict.fromkeys(args.agents)), args.apply, args.replace_existing)
         return 1 if args.check and changes else 0
     except (OSError, ValueError, subprocess.CalledProcessError) as error:
+        if args.check and isinstance(error, _ManagedFileConflict):
+            print(error, file=sys.stderr)
+            return 1
         print(f"ERROR: {error}", file=sys.stderr)
         return 2
 

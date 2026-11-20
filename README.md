@@ -50,15 +50,21 @@ On each other machine, use:
 python sync.py --agents codex claude antigravity --pull --apply
 ```
 
-`--pull` requires a clean checkout and runs `git pull --ff-only`; it does not commit, push, stash changes, or resolve conflicts. Run it only after the GitHub remote exists. Without `--pull`, installation works offline from the current checkout. The output prints the source commit so machines can compare revisions.
+`--pull` requires a clean checkout and runs `git pull --ff-only`; it does not commit, push, stash changes, or resolve conflicts. Run it only after the GitHub remote exists. Without `--pull`, installation works offline from the current checkout.
 
-Check installed content without changing it:
+`Checkout Git HEAD` shows the current commit, or `uncommitted` if Git cannot resolve `HEAD`. Installation reads the source working tree, so it can include uncommitted changes at the same `HEAD`. Commit source changes before distribution.
+
+Use `--check` to compare the selected managed files with the current source. This leaves the installed files, backups, and `state.json` untouched.
 
 ```sh
 python sync.py --agents codex --check
 ```
 
-Exit codes: `0` means success or a matching check, `1` means a check found differences, and `2` means installation was blocked or failed. Matching content checks cover the selected files, while the printed source commit identifies their source revision. Source files should be committed before distribution.
+- `0` means the selected files match.
+- `1` means files are missing, changed, or obsolete. If existing or locally edited files need review, the script lists their paths.
+- `2` means an error stopped the check, such as invalid source files, a state file that cannot be read or parsed as JSON, or a directory where a managed file is expected.
+
+A successful preview or installation exits with `0`. If existing or locally edited files block a preview or installation, the script exits with `2`.
 
 ## Installation locations
 
