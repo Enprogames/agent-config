@@ -34,9 +34,29 @@
 
 ## Proposed changes and approval
 
-- When asked to show recommended before/after changes, treat the request as proposal-only unless the user also explicitly requests application. Inspect the current files and show the complete, exact unified diff of every change you recommend, including tests, documentation, configuration, additions, deletions, and renames. Do not omit hunks or replace implementation with placeholders. Use current working files as the baseline unless another comparison is requested; preserve existing user edits.
-- When useful for a reliable proposal, implement and test the candidate in an isolated temporary workspace or detached worktree. A preview request authorizes creating and cleaning up that candidate, including its worktree metadata, but does not authorize modifying the user's working tree or index or acting on live services, production data, or hardware. Validate the candidate actually shown and report checks and limitations. Follow [preview guidance](references/file-editing.md#previewing-changes-before-approval).
-- When the user approves a presented diff, apply that exact patch. If new evidence, a failing check, or a relevant baseline change requires different edits, explain why and present the revised complete diff for approval before applying the deviation. Do not silently add fixes or improvements. Continue independent work that remains covered by approval.
+- Requests solely for recommendations or explanations are read-only. A
+  request to preview a change or show its proposed diff authorizes drafting and
+  verification in an isolated candidate, including temporary worktree setup
+  and cleanup. Honor explicit restrictions on file edits. Keep the user's
+  checkout, index, live services, production data, and hardware outside the
+  preview.
+- Use the current working files as the baseline unless the user requests
+  another comparison. Follow [preview guidance](references/file-editing.md#previewing-changes-before-approval)
+  for isolation, verification, and cleanup.
+- Present change walkthroughs in chat. Start with a compact map of affected
+  files and symbols. Give each logical group a heading, a short explanation,
+  and one fenced `diff` block. Aim for one screen per group, roughly 20 to 30
+  diff lines or fewer when they wrap. Label continuations and use numbered
+  chat installments when needed.
+  Show the complete, exact unified diff for a proposal, including tests,
+  documentation, configuration, additions, deletions, and renames. Preserve
+  patch headers and all hunks across chunks. Export a report or patch only on
+  request.
+- Apply a presented diff only on explicit request, using the exact patch shown.
+  If new evidence, a failing check, or a relevant baseline change requires
+  different edits, explain why and present the revised complete diff for
+  approval before applying the deviation. Do not silently add fixes or
+  improvements. Continue independent work that remains covered by approval.
 
 ## Candid advice and approved decisions
 

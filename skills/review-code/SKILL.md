@@ -13,6 +13,8 @@ Prioritize concrete correctness problems, regressions, necessary security and da
 
 Check added guards, early returns, fallbacks, and wrappers for changed contracts. Verify test expectations against the requirement, not merely the new implementation.
 
+Do not infer that an action had no effect because its caller was cancelled. Preserve confirmed state unless another event invalidates it. Evaluate whether the caller should receive success, failure, or cancellation separately against the agreed contract.
+
 Report unresolved contract or policy choices for the user's decision. A reproduced scenario or new test alone does not establish the required behavior.
 
 Also identify complexity that makes the change materially harder to understand: unnecessary indirection, unclear names, speculative abstractions, redundant branches, or unrelated changes. Explain the specific simpler alternative and its tradeoff. Do not impose a different architecture merely because you prefer it.

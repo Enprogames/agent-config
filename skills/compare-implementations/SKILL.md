@@ -22,6 +22,9 @@ Do not invoke other explicit-only workflows unless requested.
    Check the shared build/test setup on the baseline before spawning candidates;
    keep discovery and execution from modifying the user's configuration.
    Spawn fresh agents concurrently without the orchestrator's conversation history.
+   Keep each worker from seeing other candidates' code, reports, or status summaries.
+   Limit the orchestrator's agent inventory to the current comparison and each
+   worker's inventory to its own subtree.
    Assign each its worktree's absolute path; require explicit working directories
    for commands and absolute paths for edits. If delegation or isolation is
    unavailable, report the limitation instead of silently substituting another workflow.

@@ -49,24 +49,47 @@ convert unrelated files to make the check pass.
 **Starting state:** The working files may contain changes that have not been
 staged.
 
-**Expected:** Use the files as they exist on disk as the baseline. If an
-isolated candidate is needed, copy the relevant files, including necessary
-untracked files, into it and make the proposed edits there. Leave the
-original working files and Git staging area unchanged.
+### Prepare and verify the candidate
 
-When verification needs an implemented candidate, prepare it there, run the
-appropriate checks, and refine it before presentation. Show the final
-candidate's complete diff and actual verification results. Do not claim tests
-of an earlier candidate validate the final one.
+Use the files as they exist on disk as the baseline unless the
+user requests another comparison. Use a task-owned temporary workspace. For
+Git, default to a detached worktree and record its absolute path and starting
+commit. Copy in the relevant working-file edits and any needed untracked
+inputs. Diff against that snapshot so the patch contains only the proposal.
+Keep the original checkout and index intact.
 
-Once the diff and results are retained in chat, remove only the candidate and
-worktree artifacts created for the proposal. Do not apply and revert edits in
-the user's working tree as a substitute for isolation. If someone else has
-changed the candidate, preserve it and report the cleanup limitation.
+Run the relevant build and targeted tests for code changes,
+including applicable existing tests and any tests added or changed. Use the
+project's applicable checks for other changes. Isolate writable test state
+and build outputs. Report the checks, results, and limitations for the final
+candidate.
 
-**Later approval:** "Apply these changes" authorizes the proposed diff. If a
-necessary extra change is discovered, explain why and show the revised
-complete proposal for approval before applying the deviation.
+### Preserve the verified patch
+
+Capture the exact patch and verification results before cleanup.
+Check that the patch reproduces the final candidate from the baseline. If
+later application requires an internal copy, keep the patch and necessary
+baseline details outside both checkouts. Remove that copy once the proposal
+is applied, declined, or superseded.
+
+### Remove the temporary workspace
+
+Before presenting the preview, stop the candidate's processes and leave its
+directory. Do this after success or failure, and after cancellation when
+execution is still available. Remove only the checkout and temporary outputs
+owned by the preview. For Git, use `git worktree remove` on the recorded path. Use
+`--force` only if the remaining tracked, untracked, and ignored contents are
+known to be disposable. Preserve unexpected edits and any checkout the user
+asked to keep. Verify the directory is gone and, for Git, the registration is
+absent from `git worktree list --porcelain`. Report the result. If cleanup is
+blocked, give the exact path, what remains, and why.
+
+### Recheck before applying
+
+"Apply these changes" authorizes the proposed diff.
+Check that it still applies to the intended checkout and preserves any
+intervening edits. If a necessary extra change is discovered, explain why and
+show the revised complete proposal for approval before applying the deviation.
 
 ## Applying changes "as planned"
 
